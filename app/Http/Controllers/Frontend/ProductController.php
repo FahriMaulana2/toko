@@ -10,13 +10,17 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::where('is_active', true)->get();
+        $products = Product::where('is_active', true)
+            ->latest()
+            ->get();
+
         return view('frontend.products.index', compact('products'));
     }
     
     public function show($slug)
     {
         $product = Product::with('brand')->where('slug', $slug)->firstOrFail();
+
         $relatedProducts = Product::where('is_active', true)
             ->where('id', '!=', $product->id)
             ->where(function($q) use ($product) {
