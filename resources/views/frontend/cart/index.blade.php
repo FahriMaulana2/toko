@@ -25,8 +25,6 @@ function displayCart() {
     const container = document.getElementById('cart-content');
     const emptyCartDiv = document.getElementById('empty-cart');
     
-    console.log('Cart data:', cart);
-    
     if (cart.length === 0) {
         container.innerHTML = '';
         emptyCartDiv.classList.remove('hidden');
@@ -53,7 +51,6 @@ function displayCart() {
     `;
     
     let total = 0;
-    
     for (let i = 0; i < cart.length; i++) {
         const item = cart[i];
         const subtotal = item.price * item.quantity;
@@ -63,15 +60,15 @@ function displayCart() {
             <tr class="border-b">
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-3">
-                        <img src="${item.image || '/images/placeholder.jpg'}" alt="${item.name}" class="w-16 h-16 object-cover rounded" onerror="this.src='/images/placeholder.jpg'">
+                        <img src="${item.image || '/images/placeholder.jpg'}" class="w-16 h-16 object-cover rounded" onerror="this.src='/images/placeholder.jpg'">
                         <span class="font-medium">${item.name}</span>
                     </div>
-                 </td>
+                </td>
                 <td class="px-4 py-3 text-center">Rp ${item.price.toLocaleString('id-ID')}</td>
                 <td class="px-4 py-3">
                     <div class="flex items-center justify-center gap-2">
                         <button onclick="updateQty(${item.id}, ${item.quantity - 1})" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-brown-600 hover:text-white">-</button>
-                        <span class="w-12 text-center" id="qty-${item.id}">${item.quantity}</span>
+                        <span class="w-12 text-center">${item.quantity}</span>
                         <button onclick="updateQty(${item.id}, ${item.quantity + 1})" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-brown-600 hover:text-white">+</button>
                     </div>
                 </td>
@@ -111,11 +108,10 @@ function displayCart() {
                         </div>
                     </div>
                     
-                    <!-- ========== TOMBOL PROCEED TO CHECKOUT YANG DIPERBAIKI ========== -->
+                    <!-- TOMBOL PROCEED TO CHECKOUT -->
                     <a href="/checkout" class="block w-full bg-brown-600 text-white text-center py-3 rounded-lg mt-6 hover:bg-brown-700 transition">
                         Proceed to Checkout
                     </a>
-                    <!-- ================================================================= -->
                     
                     <a href="{{ route('products.index') }}" class="block w-full text-center text-brown-600 mt-4 hover:underline">
                         Continue Shopping
