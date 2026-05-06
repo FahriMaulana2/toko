@@ -1,19 +1,30 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
-use Illuminate\Support\Facades\Auth;
 
+/*
+|--------------------------------------------------------------------------
+| WEB ROUTES (FRONTEND)
+|--------------------------------------------------------------------------
+*/
+
+// Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Products
+
+// ==================== PRODUCTS ====================
 Route::get('/products', [FrontendProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [FrontendProductController::class, 'show'])->name('products.show');
 
-// Cart
+
+// ==================== CART ====================
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/add', [CartController::class, 'add'])->name('add');
@@ -22,36 +33,32 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::delete('/clear', [CartController::class, 'clear'])->name('clear');
 });
 
-// Cart Route (Alternatif)
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
-// Checkout
+// ==================== CHECKOUT ====================
 Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('index');
     Route::post('/', [CheckoutController::class, 'store'])->name('store');
     Route::get('/success/{orderNumber}', [CheckoutController::class, 'success'])->name('success');
 });
 
-// Orders (Authenticated only)
+
+// ==================== ORDERS (LOGIN REQUIRED) ====================
 Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [FrontendOrderController::class, 'index'])->name('index');
     Route::get('/{orderNumber}', [FrontendOrderController::class, 'show'])->name('show');
 });
 
-// Authentication Routes
-Auth::routes();
 
-// Redirect /home ke homepage
+// ==================== AUTH (LOGIN, REGISTER, LOGOUT) ====================
+Auth::routes();
+// ⛔ JANGAN TAMBAH logout manual lagi (sudah ada dari Auth::routes)
+
+
+// Redirect /home → /
 Route::get('/home', function () {
     return redirect('/');
 });
 
-// ========== TAMBAHKAN ROUTE LOGOUT MANUAL DI SINI ==========
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/login');
-})->name('logout');
-// ===========================================================
 
-// Admin Routes
+// ==================== ADMIN ROUTES ====================
 require __DIR__ . '/admin.php';
