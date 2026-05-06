@@ -3,393 +3,155 @@
 @section('title', 'Checkout - Kiana Furniture')
 
 @section('content')
-
-<div class="max-w-6xl mx-auto px-4 py-10">
-
-    <h1 class="text-3xl font-bold mb-8">
-        Checkout
-    </h1>
-
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        <!-- FORM -->
-        <div class="lg:col-span-2">
-
-            <div class="bg-white shadow rounded p-6">
-
-                <form id="checkoutForm">
-
-                    @csrf
-
-                    <!-- FULLNAME -->
-                    <div class="mb-4">
-
-                        <label class="block mb-2 font-semibold">
-                            Nama Lengkap
-                        </label>
-
-                        <input
-                            type="text"
-                            name="fullname"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        >
-
-                    </div>
-
-                    <!-- PHONE -->
-                    <div class="mb-4">
-
-                        <label class="block mb-2 font-semibold">
-                            Nomor WhatsApp
-                        </label>
-
-                        <input
-                            type="text"
-                            name="phone"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        >
-
-                    </div>
-
-                    <!-- ADDRESS -->
-                    <div class="mb-4">
-
-                        <label class="block mb-2 font-semibold">
-                            Alamat
-                        </label>
-
-                        <textarea
-                            name="address"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        ></textarea>
-
-                    </div>
-
-                    <!-- CITY -->
-                    <div class="mb-4">
-
-                        <label class="block mb-2 font-semibold">
-                            Kota
-                        </label>
-
-                        <input
-                            type="text"
-                            name="city"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        >
-
-                    </div>
-
-                    <!-- POSTAL -->
-                    <div class="mb-4">
-
-                        <label class="block mb-2 font-semibold">
-                            Kode Pos
-                        </label>
-
-                        <input
-                            type="text"
-                            name="postal_code"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        >
-
-                    </div>
-
-                    <!-- COURIER -->
-                    <div class="mb-6">
-
-                        <label class="block mb-2 font-semibold">
-                            Kurir
-                        </label>
-
-                        <select
-                            name="courier"
-                            required
-                            class="w-full border rounded px-4 py-2"
-                        >
-
-                            <option value="">
-                                Pilih Kurir
-                            </option>
-
-                            <option value="JNE">
-                                JNE
-                            </option>
-
-                            <option value="J&T">
-                                J&T
-                            </option>
-
-                            <option value="SiCepat">
-                                SiCepat
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <!-- BUTTON -->
-                    <button
-                        type="submit"
-                        class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition"
-                    >
-                        Proses ke WhatsApp
-                    </button>
-
-                </form>
-
-            </div>
-
+<div class="max-w-6xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-playfair font-bold text-gray-800 mb-8">Checkout</h1>
+    
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            {{ session('error') }}
         </div>
-
-        <!-- CART -->
-        <div>
-
-            <div class="bg-white shadow rounded p-6">
-
-                <h2 class="text-xl font-bold mb-4">
-                    Cart
-                </h2>
-
-                <div id="cart-items"></div>
-
-                <hr class="my-4">
-
-                <div class="flex justify-between font-bold text-lg">
-
-                    <span>Total</span>
-
-                    <span id="grand-total">
-                        Rp 0
-                    </span>
-
+    @endif
+    
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Shipping Information -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-4">Shipping Information</h2>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Full Name *</label>
+                <input type="text" id="fullname" class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:border-brown-600">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Phone Number *</label>
+                <input type="tel" id="phone" class="w-full border rounded-lg px-4 py-2">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Address *</label>
+                <textarea id="address" rows="3" class="w-full border rounded-lg px-4 py-2"></textarea>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">City *</label>
+                    <input type="text" id="city" class="w-full border rounded-lg px-4 py-2">
                 </div>
-
+                <div>
+                    <label class="block text-sm font-medium mb-1">Postal Code *</label>
+                    <input type="text" id="postal_code" class="w-full border rounded-lg px-4 py-2">
+                </div>
             </div>
-
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Courier *</label>
+                <select id="courier" class="w-full border rounded-lg px-4 py-2">
+                    <option value="JNE">JNE (Rp 20,000)</option>
+                    <option value="J&T">J&T Express (Rp 18,000)</option>
+                    <option value="SiCepat">SiCepat (Rp 15,000)</option>
+                </select>
+            </div>
         </div>
-
+        
+        <!-- Order Summary & Payment -->
+        <div>
+            <!-- Order Summary -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                <div id="order-summary">
+                    <div class="text-center py-4">Loading cart data...</div>
+                </div>
+            </div>
+            
+            <!-- WhatsApp Checkout Button -->
+            <div class="bg-green-50 rounded-xl shadow-md p-6 border border-green-200">
+                <div class="text-center mb-4">
+                    <i class="fab fa-whatsapp text-5xl text-green-500 mb-2"></i>
+                    <h2 class="text-xl font-semibold text-gray-800">Konfirmasi via WhatsApp</h2>
+                    <p class="text-gray-500 text-sm mt-1">Kirim pesanan Anda melalui WhatsApp untuk konfirmasi</p>
+                </div>
+                
+                <button id="whatsapp-checkout" class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition flex items-center justify-center gap-2">
+                    <i class="fab fa-whatsapp text-xl"></i> Kirim ke WhatsApp
+                </button>
+                
+                <p class="text-xs text-gray-400 text-center mt-3">
+                    Pesanan akan dikirim ke nomor admin untuk diproses
+                </p>
+            </div>
+        </div>
     </div>
-
+    
+    <div class="mt-8">
+        <a href="{{ route('cart.index') }}" class="text-brown-600 hover:underline">
+            ← Back to Cart
+        </a>
+    </div>
 </div>
 
 <script>
+const ADMIN_PHONE = ' 6283831520933';
 
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById('whatsapp-checkout').addEventListener('click', async function() {
 
-function renderCart() {
+    const fullname = document.getElementById('fullname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const postalCode = document.getElementById('postal_code').value.trim();
+    const courier = document.getElementById('courier').value;
 
-    const cartContainer =
-        document.getElementById('cart-items');
-
-    const grandTotal =
-        document.getElementById('grand-total');
-
-    if(!cartContainer) return;
-
-    if(cart.length < 1){
-
-        cartContainer.innerHTML = `
-            <p class="text-gray-500">
-                Cart kosong
-            </p>
-        `;
-
-        grandTotal.innerHTML = 'Rp 0';
-
+    if (!fullname || !phone || !address || !city || !postalCode) {
+        alert('Harap lengkapi semua data!');
         return;
     }
 
-    let html = '';
+    const cart = JSON.parse(localStorage.getItem('kiana_cart') || '[]');
+    if (cart.length === 0) {
+        alert('Keranjang kosong!');
+        return;
+    }
 
-    let total = 0;
-
-    cart.forEach(item => {
-
-        let subtotal =
-            item.price * item.quantity;
-
-        total += subtotal;
-
-        html += `
-
-            <div class="flex gap-4 mb-4 border-b pb-4">
-
-                <img
-                    src="${item.image}"
-                    class="w-20 h-20 object-cover rounded"
-                >
-
-                <div class="flex-1">
-
-                    <h3 class="font-bold">
-                        ${item.name}
-                    </h3>
-
-                    <p>
-                        Qty: ${item.quantity}
-                    </p>
-
-                    <p class="font-semibold">
-                        Rp ${subtotal.toLocaleString('id-ID')}
-                    </p>
-
-                </div>
-
-            </div>
-        `;
+    // 🔥 KIRIM KE DATABASE
+    const response = await fetch('/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            fullname,
+            phone,
+            address,
+            city,
+            postal_code: postalCode,
+            courier,
+            cart
+        })
     });
 
-    cartContainer.innerHTML = html;
+    const result = await response.json();
 
-    grandTotal.innerHTML =
-        'Rp ' + total.toLocaleString('id-ID');
-}
+    // 🔥 BUAT PESAN WA
+    let message = '*ORDER BARU*%0A%0A';
+    message += `Nama: ${fullname}%0A`;
+    message += `HP: ${phone}%0A`;
+    message += `Alamat: ${address}%0A%0A`;
 
-document.addEventListener(
-    'DOMContentLoaded',
-    function () {
-
-    console.log('Checkout loaded');
-
-    renderCart();
-
-    const form =
-        document.getElementById('checkoutForm');
-
-    form.addEventListener(
-        'submit',
-        async function(e){
-
-        e.preventDefault();
-
-        if(cart.length < 1){
-
-            alert('Cart kosong');
-
-            return;
-        }
-
-        const formData = {
-
-            fullname:
-                form.fullname.value,
-
-            phone:
-                form.phone.value,
-
-            address:
-                form.address.value,
-
-            city:
-                form.city.value,
-
-            postal_code:
-                form.postal_code.value,
-
-            courier:
-                form.courier.value,
-
-            cart: cart
-        };
-
-        console.log(
-            'KIRIM DATA:',
-            formData
-        );
-
-        try {
-
-            const response =
-                await fetch('/checkout', {
-
-                method: 'POST',
-
-                headers: {
-
-                    'Content-Type':
-                        'application/json',
-
-                    'X-CSRF-TOKEN':
-                        document.querySelector(
-                            'meta[name="csrf-token"]'
-                        ).content
-                },
-
-                body:
-                    JSON.stringify(formData)
-            });
-
-            const result =
-                await response.json();
-
-            console.log(
-                'RESPON:',
-                result
-            );
-
-            if(result.success){
-
-                // FORMAT PESAN WA
-                let message =
-`Halo Admin Kiana Furniture
-
-Saya ingin order furniture:
-
-`;
-
-                cart.forEach(item => {
-
-                    message +=
-`${item.name}
-Qty: ${item.quantity}
-
-`;
-                });
-
-                message += `
-Total:
-Rp ${result.total}
-
-Nama:
-${formData.fullname}
-
-Alamat:
-${formData.address}
-
-Kota:
-${formData.city}
-
-Kurir:
-${formData.courier}
-`;
-
-                // HAPUS CART
-                localStorage.removeItem('cart');
-
-                // REDIRECT WA
-                window.location.href =
-`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
-
-            } else {
-
-                alert(result.message);
-            }
-
-        } catch(error){
-
-            console.log(error);
-
-            alert('Checkout gagal');
-        }
+    cart.forEach((item, i) => {
+        message += `${i+1}. ${item.name} x ${item.quantity}%0A`;
     });
+
+    message += `%0ATotal: Rp ${result.total}`;
+
+    // 🔥 KIRIM WA
+    window.open(`https://wa.me/${ADMIN_PHONE}?text=${message}`, '_blank');
+
+    // 🔥 CLEAR CART
+    localStorage.removeItem('kiana_cart');
+
+    window.location.href = '/';
 });
-
 </script>
-
 @endsection
+  
