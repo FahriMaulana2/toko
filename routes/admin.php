@@ -6,8 +6,9 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ShipmentController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+Route::name('admin.')->middleware(['auth', 'admin'])->group(function () {
     
     // Dashboard
     Route::get('/', function () {
@@ -35,9 +36,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('shipments/{shipment}/shipped', [ShipmentController::class, 'markAsShipped'])->name('shipments.shipped');
     Route::post('shipments/{shipment}/delivered', [ShipmentController::class, 'markAsDelivered'])->name('shipments.delivered');
 
-    // Logout Route - Manual
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/login');
-})->name('logout');
+    // Logout
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/login');
+    })->name('logout');
 });
