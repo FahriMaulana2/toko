@@ -1,3 +1,193 @@
+@extends('layouts.app')
+
+@section('title', 'Checkout - Kiana Furniture')
+
+@section('content')
+
+<div class="max-w-6xl mx-auto px-4 py-12">
+
+    <h1 class="text-3xl font-bold mb-8">
+        Checkout
+    </h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+        <!-- FORM -->
+        <div class="bg-white shadow rounded p-6">
+
+            <form id="checkoutForm">
+
+                @csrf
+
+                <!-- FULLNAME -->
+                <div class="mb-4">
+
+                    <label class="block mb-2 font-medium">
+                        Nama Lengkap
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullname"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    >
+
+                </div>
+
+                <!-- PHONE -->
+                <div class="mb-4">
+
+                    <label class="block mb-2 font-medium">
+                        Nomor HP
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    >
+
+                </div>
+
+                <!-- ADDRESS -->
+                <div class="mb-4">
+
+                    <label class="block mb-2 font-medium">
+                        Alamat
+                    </label>
+
+                    <textarea
+                        id="address"
+                        rows="4"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <!-- CITY -->
+                <div class="mb-4">
+
+                    <label class="block mb-2 font-medium">
+                        Kota
+                    </label>
+
+                    <input
+                        type="text"
+                        id="city"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    >
+
+                </div>
+
+                <!-- POSTAL -->
+                <div class="mb-4">
+
+                    <label class="block mb-2 font-medium">
+                        Kode Pos
+                    </label>
+
+                    <input
+                        type="text"
+                        id="postal_code"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    >
+
+                </div>
+
+                <!-- COURIER -->
+                <div class="mb-6">
+
+                    <label class="block mb-2 font-medium">
+                        Courier
+                    </label>
+
+                    <select
+                        id="courier"
+                        class="w-full border rounded px-4 py-2"
+                        required
+                    >
+                        <option value="JNE">JNE</option>
+                        <option value="J&T">J&T</option>
+                        <option value="SiCepat">SiCepat</option>
+                    </select>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button
+                    type="submit"
+                    class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition"
+                >
+                    Checkout via WhatsApp
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- CART -->
+        <div class="bg-white shadow rounded p-6">
+
+            <h2 class="text-2xl font-bold mb-6">
+                Order Summary
+            </h2>
+
+            <!-- CART ITEMS -->
+            <div id="cart-items"></div>
+
+            <!-- TOTAL -->
+            <div class="mt-6 border-t pt-4">
+
+                <div class="flex justify-between mb-3">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span id="subtotal">
+                        Rp 0
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between mb-3">
+
+                    <span>
+                        Shipping
+                    </span>
+
+                    <span>
+                        Rp 20.000
+                    </span>
+
+                </div>
+
+                <div class="flex justify-between text-xl font-bold">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span id="grandtotal">
+                        Rp 0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
 <script>
 
 function formatRupiah(number) {
@@ -40,11 +230,11 @@ function renderCart() {
 
         cartItems.innerHTML += `
 
-            <div class="flex gap-4 items-center mb-4">
+            <div class="flex gap-4 items-center mb-4 border-b pb-4">
 
                 <img
                     src="${item.image}"
-                    class="w-16 h-16 object-cover rounded"
+                    class="w-20 h-20 object-cover rounded"
                 >
 
                 <div class="flex-1">
@@ -84,7 +274,7 @@ function renderCart() {
 }
 
 // =========================
-// PAGE LOAD
+// LOAD
 // =========================
 
 document.addEventListener(
@@ -147,10 +337,6 @@ document.addEventListener(
 
         try {
 
-            // =========================
-            // REQUEST CHECKOUT
-            // =========================
-
             const response =
                 await fetch('/checkout', {
 
@@ -172,16 +358,10 @@ document.addEventListener(
                     JSON.stringify(formData)
             });
 
-            console.log('Response:', response);
-
             const result =
                 await response.json();
 
             console.log('Result:', result);
-
-            // =========================
-            // SUCCESS
-            // =========================
 
             if(result.success){
 
@@ -189,21 +369,10 @@ document.addEventListener(
                     'Order berhasil disimpan!'
                 );
 
-                console.log(
-                    'ORDER SUCCESS'
-                );
-
                 // HAPUS CART
                 localStorage.removeItem('cart');
 
-                // =========================
-                // DEBUG DULU
-                // =========================
-
-                // NONAKTIFKAN SEMENTARA
-                // AGAR ERROR TIDAK HILANG
-
-                /*
+                // PESAN WA
                 const waMessage =
 `Halo Admin, saya ingin order furniture.
 
@@ -211,34 +380,37 @@ No Order: ${result.order_number}
 
 Total: Rp ${result.total}`;
 
+                // GANTI NOMOR ADMIN
                 const waUrl =
 `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`;
 
-                window.open(waUrl, '_blank');
+                // BUKA WA
+                window.open(
+                    waUrl,
+                    '_blank'
+                );
 
-                window.location.href = '/';
-                */
+                // REDIRECT
+                setTimeout(() => {
+
+                    window.location.href = '/';
+
+                }, 1000);
 
             } else {
 
-                console.log(
-                    'ORDER FAILED',
-                    result
-                );
+                console.log(result);
 
                 alert(
-                    result.message ||
                     result.error ||
+                    result.message ||
                     'Checkout gagal'
                 );
             }
 
         } catch(error){
 
-            console.error(
-                'CHECKOUT ERROR:',
-                error
-            );
+            console.error(error);
 
             alert(
                 'Terjadi error checkout'
@@ -250,3 +422,5 @@ Total: Rp ${result.total}`;
 });
 
 </script>
+
+@endsection
