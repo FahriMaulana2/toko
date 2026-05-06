@@ -16,10 +16,10 @@
                 <!-- SEARCH -->
                 <input type="text" name="search" placeholder="Search..."
                     value="{{ request('search') }}"
-                    class="w-full border px-3 py-2 mb-4">
+                    class="w-full border px-3 py-2 mb-4 rounded">
 
                 <!-- CATEGORY -->
-                <select name="category" class="w-full border px-3 py-2 mb-4">
+                <select name="category" class="w-full border px-3 py-2 mb-4 rounded">
                     <option value="all">All Category</option>
                     <option value="living-room" {{ request('category') == 'living-room' ? 'selected' : '' }}>Living Room</option>
                     <option value="bedroom" {{ request('category') == 'bedroom' ? 'selected' : '' }}>Bedroom</option>
@@ -29,7 +29,7 @@
                 </select>
 
                 <!-- PRICE -->
-                <select name="price" class="w-full border px-3 py-2 mb-4">
+                <select name="price" class="w-full border px-3 py-2 mb-4 rounded">
                     <option value="">All Price</option>
                     <option value="0-500000" {{ request('price') == '0-500000' ? 'selected' : '' }}>Under 500K</option>
                     <option value="500000-1000000" {{ request('price') == '500000-1000000' ? 'selected' : '' }}>500K - 1jt</option>
@@ -38,14 +38,14 @@
                 </select>
 
                 <!-- SORT -->
-                <select name="sort" class="w-full border px-3 py-2 mb-4">
+                <select name="sort" class="w-full border px-3 py-2 mb-4 rounded">
                     <option value="latest">Newest</option>
                     <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price Low → High</option>
                     <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price High → Low</option>
                 </select>
 
                 <!-- BUTTON -->
-                <button class="w-full bg-brown-600 text-white py-2 rounded">
+                <button class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition">
                     Filter
                 </button>
 
@@ -54,6 +54,7 @@
 
         <!-- PRODUCT GRID -->
         <div class="lg:col-span-3">
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 @forelse($products as $p)
@@ -69,25 +70,128 @@
                     @endphp
 
                     <div class="bg-white shadow rounded overflow-hidden">
+
+                        <!-- IMAGE -->
                         <a href="{{ route('products.show', $p->slug) }}">
-                            <img src="{{ $imageUrl }}" class="w-full h-60 object-cover">
+                            <img src="{{ $imageUrl }}"
+                                 alt="{{ $p->name }}"
+                                 class="w-full h-60 object-cover hover:scale-105 transition duration-300">
                         </a>
 
+                        <!-- CONTENT -->
                         <div class="p-4">
-                            <h3 class="font-bold text-lg">{{ $p->name }}</h3>
-                            <p class="text-brown-600 font-bold">
+
+                            <h3 class="font-bold text-lg mb-2">
+                                {{ $p->name }}
+                            </h3>
+
+                            <p class="text-brown-600 font-bold mb-4">
                                 Rp {{ number_format($p->price, 0, ',', '.') }}
                             </p>
+
+                            <!-- BUTTON -->
+                            <button
+                                onclick="addToCart(
+                                    {{ $p->id }},
+                                    '{{ $p->name }}',
+                                    {{ $p->price }},
+                                    '{{ $imageUrl }}'
+                                )"
+                                class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
+                            >
+                                Add To Cart
+                            </button>
+
                         </div>
                     </div>
 
                 @empty
-                    <p>Tidak ada produk ditemukan</p>
+
+                    <div class="col-span-3 text-center py-10">
+                        <p class="text-gray-500 text-lg">
+                            Tidak ada produk ditemukan
+                        </p>
+                    </div>
+
                 @endforelse
 
             </div>
+
         </div>
 
     </div>
 </div>
+
+<!-- CART SCRIPT -->
+<script>
+
+function addToCart(id, name, price, image) {
+
+    console.log('Add to cart clicked');
+
+    // Ambil cart lama
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Cari produk
+    let existing = cart.find(item => item.id === id);
+
+    // Jika sudah ada
+    if (existing) {
+
+        existing.quantity += 1;
+
+    } else {
+
+        // Tambah baru
+        cart.push({
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            quantity: 1
+        });
+    }
+
+    // Simpan ke localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    console.log('Cart saved:', cart);
+
+    alert('Produk berhasil ditambahkan ke cart!');
+
+    // Update badge jika ada
+    updateCartBadge();
+}
+
+function updateCartBadge() {
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    let totalQty = 0;
+
+    cart.forEach(item => {
+        totalQty += item.quantity;
+    });
+
+    let badge = document.getElementById('cart-count');
+
+    if (badge) {
+        badge.innerText = totalQty;
+    }
+
+    console.log('Update badge, jumlah item:', totalQty);
+}
+
+// Jalankan saat halaman load
+document.addEventListener('DOMContentLoaded', function () {
+
+    console.log('DOM fully loaded');
+
+    updateCartBadge();
+
+    console.log('✅ addToCart function is ready');
+});
+
+</script>
+
 @endsection
