@@ -67,12 +67,12 @@
             </label>
         </div>
         
-        <!-- ========== TOMBOL SAVE DAN CANCEL ========== -->
-        <div style="display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
-            <button type="submit" style="background-color: #8B5E3C; color: white; padding: 10px 24px; border-radius: 8px; border: none; cursor: pointer; font-weight: 500;">
-                <i class="fas fa-save"></i> Save Product
+        <!-- Tombol Submit -->
+        <div class="flex gap-3 mt-6 pt-4 border-t">
+            <button type="submit" class="bg-brown-600 text-white px-6 py-2 rounded-lg hover:bg-brown-700 transition">
+                <i class="fas fa-save mr-2"></i> Save Product
             </button>
-            <a href="{{ route('admin.products.index') }}" style="background-color: #9ca3af; color: white; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 500;">
+            <a href="{{ route('admin.products.index') }}" class="bg-gray-400 text-white px-6 py-2 rounded-lg hover:bg-gray-500 transition">
                 Cancel
             </a>
         </div>
