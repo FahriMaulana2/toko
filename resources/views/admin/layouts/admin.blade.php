@@ -29,21 +29,27 @@
         <nav class="p-4">
             <div class="mb-6">
                 <p class="text-gray-500 text-xs uppercase mb-3">Main Menu</p>
+
                 <a href="{{ route('admin.dashboard') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-tachometer-alt w-5"></i> Dashboard
                 </a>
+
                 <a href="{{ route('admin.products.index') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-box w-5"></i> Products
                 </a>
+
                 <a href="{{ route('admin.brands.index') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-tag w-5"></i> Brands
                 </a>
+
                 <a href="{{ route('admin.orders.index') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-shopping-cart w-5"></i> Orders
                 </a>
+
                 <a href="{{ route('admin.payments.index') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-credit-card w-5"></i> Payments
                 </a>
+
                 <a href="{{ route('admin.shipments.index') }}" class="sidebar-item flex items-center gap-3 px-4 py-3 rounded-lg transition mb-1 text-gray-300 hover:bg-gray-800">
                     <i class="fas fa-truck w-5"></i> Shipments
                 </a>
@@ -51,6 +57,7 @@
             
             <div class="pt-6 border-t border-gray-800">
                 <p class="text-gray-500 text-xs uppercase mb-3">Account</p>
+
                 <div class="px-4 py-3 rounded-lg bg-gray-800 mb-2">
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 bg-brown-600 rounded-full flex items-center justify-center">
@@ -62,12 +69,15 @@
                         </div>
                     </div>
                 </div>
-                <form method="POST" action="{{ route('logout') }}">
+
+                <!-- ✅ LOGOUT FIX -->
+                <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-red-600 hover:text-white transition">
                         <i class="fas fa-sign-out-alt w-5"></i> Logout
                     </button>
                 </form>
+
             </div>
         </nav>
     </aside>
@@ -76,12 +86,15 @@
     <main class="flex-1 overflow-y-auto">
         <div class="bg-white shadow-sm px-6 py-4 flex justify-between items-center sticky top-0 z-10">
             <h2 class="text-xl font-semibold text-gray-800">@yield('title')</h2>
+
             <a href="{{ url('/') }}" target="_blank" class="text-gray-600 hover:text-brown-600">
                 <i class="fas fa-external-link-alt"></i> View Website
             </a>
         </div>
         
         <div class="p-6">
+
+            <!-- ✅ NOTIF SUKSES -->
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6">
                     {{ session('success') }}
