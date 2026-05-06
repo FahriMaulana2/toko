@@ -31,14 +31,22 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category' => 'nullable|string',
+
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image_url' => 'nullable|url',
+
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);
 
+        // Upload file
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $validated['image'] = $path;
+        }
+        // Atau URL
+        elseif ($request->image_url) {
+            $validated['image'] = $request->image_url;
         }
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -47,7 +55,8 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
+        return redirect()->route('admin.products.index')
+            ->with('success', 'Product created successfully!');
     }
 
     public function edit(Product $product)
@@ -65,7 +74,10 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category' => 'nullable|string',
+
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image_url' => 'nullable|url',
+
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
         ]);
@@ -73,6 +85,8 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $validated['image'] = $path;
+        } elseif ($request->image_url) {
+            $validated['image'] = $request->image_url;
         }
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -81,12 +95,14 @@ class ProductController extends Controller
 
         $product->update($validated);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('admin.products.index')
+            ->with('success', 'Product updated successfully!');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('admin.products.index')
+            ->with('success', 'Product deleted successfully!');
     }
 }
