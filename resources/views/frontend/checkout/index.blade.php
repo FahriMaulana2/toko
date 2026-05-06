@@ -1,183 +1,239 @@
 @extends('layouts.app')
 
-@section('title', 'Checkout - Kiana Furniture')
+@section('title', 'Products - Kiana Furniture')
 
 @section('content')
 
-<div class="max-w-6xl mx-auto px-4 py-12">
+<div class="max-w-7xl mx-auto px-4 py-16">
 
     <h1 class="text-3xl font-bold mb-8">
-        Checkout
+        Our Products
     </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-        <!-- FORM -->
-        <div class="bg-white shadow rounded p-6">
+        <!-- FILTER -->
+        <div class="lg:col-span-1">
 
-            <form id="checkoutForm">
+            <form
+                method="GET"
+                action="{{ route('products.index') }}"
+                class="bg-white p-6 rounded shadow"
+            >
 
-                @csrf
+                <!-- SEARCH -->
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search..."
+                    value="{{ request('search') }}"
+                    class="w-full border px-3 py-2 mb-4 rounded"
+                >
 
-                <!-- FULLNAME -->
-                <div class="mb-4">
+                <!-- CATEGORY -->
+                <select
+                    name="category"
+                    class="w-full border px-3 py-2 mb-4 rounded"
+                >
+                    <option value="all">
+                        All Category
+                    </option>
 
-                    <label class="block mb-2 font-medium">
-                        Nama Lengkap
-                    </label>
-
-                    <input
-                        type="text"
-                        id="fullname"
-                        class="w-full border rounded px-4 py-2"
-                        required
+                    <option
+                        value="living-room"
+                        {{ request('category') == 'living-room' ? 'selected' : '' }}
                     >
+                        Living Room
+                    </option>
 
-                </div>
-
-                <!-- PHONE -->
-                <div class="mb-4">
-
-                    <label class="block mb-2 font-medium">
-                        Nomor HP
-                    </label>
-
-                    <input
-                        type="text"
-                        id="phone"
-                        class="w-full border rounded px-4 py-2"
-                        required
+                    <option
+                        value="bedroom"
+                        {{ request('category') == 'bedroom' ? 'selected' : '' }}
                     >
+                        Bedroom
+                    </option>
 
-                </div>
-
-                <!-- ADDRESS -->
-                <div class="mb-4">
-
-                    <label class="block mb-2 font-medium">
-                        Alamat
-                    </label>
-
-                    <textarea
-                        id="address"
-                        rows="4"
-                        class="w-full border rounded px-4 py-2"
-                        required
-                    ></textarea>
-
-                </div>
-
-                <!-- CITY -->
-                <div class="mb-4">
-
-                    <label class="block mb-2 font-medium">
-                        Kota
-                    </label>
-
-                    <input
-                        type="text"
-                        id="city"
-                        class="w-full border rounded px-4 py-2"
-                        required
+                    <option
+                        value="office"
+                        {{ request('category') == 'office' ? 'selected' : '' }}
                     >
+                        Office
+                    </option>
 
-                </div>
-
-                <!-- POSTAL -->
-                <div class="mb-4">
-
-                    <label class="block mb-2 font-medium">
-                        Kode Pos
-                    </label>
-
-                    <input
-                        type="text"
-                        id="postal_code"
-                        class="w-full border rounded px-4 py-2"
-                        required
+                    <option
+                        value="kitchen"
+                        {{ request('category') == 'kitchen' ? 'selected' : '' }}
                     >
+                        Kitchen
+                    </option>
 
-                </div>
-
-                <!-- COURIER -->
-                <div class="mb-6">
-
-                    <label class="block mb-2 font-medium">
-                        Courier
-                    </label>
-
-                    <select
-                        id="courier"
-                        class="w-full border rounded px-4 py-2"
-                        required
+                    <option
+                        value="dining-room"
+                        {{ request('category') == 'dining-room' ? 'selected' : '' }}
                     >
-                        <option value="JNE">JNE</option>
-                        <option value="J&T">J&T</option>
-                        <option value="SiCepat">SiCepat</option>
-                    </select>
+                        Dining Room
+                    </option>
 
-                </div>
+                </select>
+
+                <!-- PRICE -->
+                <select
+                    name="price"
+                    class="w-full border px-3 py-2 mb-4 rounded"
+                >
+
+                    <option value="">
+                        All Price
+                    </option>
+
+                    <option
+                        value="0-500000"
+                        {{ request('price') == '0-500000' ? 'selected' : '' }}
+                    >
+                        Under 500K
+                    </option>
+
+                    <option
+                        value="500000-1000000"
+                        {{ request('price') == '500000-1000000' ? 'selected' : '' }}
+                    >
+                        500K - 1jt
+                    </option>
+
+                    <option
+                        value="1000000-3000000"
+                        {{ request('price') == '1000000-3000000' ? 'selected' : '' }}
+                    >
+                        1jt - 3jt
+                    </option>
+
+                    <option
+                        value="3000000+"
+                        {{ request('price') == '3000000+' ? 'selected' : '' }}
+                    >
+                        Above 3jt
+                    </option>
+
+                </select>
+
+                <!-- SORT -->
+                <select
+                    name="sort"
+                    class="w-full border px-3 py-2 mb-4 rounded"
+                >
+
+                    <option value="latest">
+                        Newest
+                    </option>
+
+                    <option
+                        value="price_low"
+                        {{ request('sort') == 'price_low' ? 'selected' : '' }}
+                    >
+                        Price Low → High
+                    </option>
+
+                    <option
+                        value="price_high"
+                        {{ request('sort') == 'price_high' ? 'selected' : '' }}
+                    >
+                        Price High → Low
+                    </option>
+
+                </select>
 
                 <!-- BUTTON -->
                 <button
-                    type="submit"
-                    class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition"
+                    class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
                 >
-                    Checkout via WhatsApp
+                    Filter
                 </button>
 
             </form>
 
         </div>
 
-        <!-- CART -->
-        <div class="bg-white shadow rounded p-6">
+        <!-- PRODUCT GRID -->
+        <div class="lg:col-span-3">
 
-            <h2 class="text-2xl font-bold mb-6">
-                Order Summary
-            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <!-- CART ITEMS -->
-            <div id="cart-items"></div>
+                @forelse($products as $p)
 
-            <!-- TOTAL -->
-            <div class="mt-6 border-t pt-4">
+                    @php
 
-                <div class="flex justify-between mb-3">
+                        if (
+                            $p->image &&
+                            Str::startsWith($p->image, 'http')
+                        ) {
 
-                    <span>
-                        Subtotal
-                    </span>
+                            $imageUrl = $p->image;
 
-                    <span id="subtotal">
-                        Rp 0
-                    </span>
+                        } elseif ($p->image) {
 
-                </div>
+                            $imageUrl =
+                                asset('storage/' . $p->image);
 
-                <div class="flex justify-between mb-3">
+                        } else {
 
-                    <span>
-                        Shipping
-                    </span>
+                            $imageUrl =
+                                'https://placehold.co/300x300?text=No+Image';
+                        }
 
-                    <span>
-                        Rp 20.000
-                    </span>
+                    @endphp
 
-                </div>
+                    <div class="bg-white shadow rounded overflow-hidden">
 
-                <div class="flex justify-between text-xl font-bold">
+                        <!-- IMAGE -->
+                        <a href="{{ route('products.show', $p->slug) }}">
 
-                    <span>
-                        Total
-                    </span>
+                            <img
+                                src="{{ $imageUrl }}"
+                                alt="{{ $p->name }}"
+                                class="w-full h-60 object-cover hover:scale-105 transition duration-300"
+                            >
 
-                    <span id="grandtotal">
-                        Rp 0
-                    </span>
+                        </a>
 
-                </div>
+                        <!-- CONTENT -->
+                        <div class="p-4">
+
+                            <h3 class="font-bold text-lg mb-2">
+                                {{ $p->name }}
+                            </h3>
+
+                            <p class="text-brown-600 font-bold mb-4">
+                                Rp {{ number_format($p->price, 0, ',', '.') }}
+                            </p>
+
+                            <!-- BUTTON -->
+                            <button
+                                onclick="addToCart(
+                                    {{ $p->id }},
+                                    '{{ $p->name }}',
+                                    {{ $p->price }},
+                                    '{{ $imageUrl }}'
+                                )"
+                                class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
+                            >
+                                Add To Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                @empty
+
+                    <div class="col-span-3 text-center py-10">
+
+                        <p class="text-gray-500 text-lg">
+                            Tidak ada produk ditemukan
+                        </p>
+
+                    </div>
+
+                @endforelse
 
             </div>
 
@@ -190,235 +246,104 @@
 <!-- SCRIPT -->
 <script>
 
-function formatRupiah(number) {
+function addToCart(id, name, price, image) {
 
-    return new Intl.NumberFormat('id-ID')
-        .format(number);
+    console.log('ADD TO CART');
+
+    // AMBIL CART
+    let cart =
+        JSON.parse(localStorage.getItem('cart')) || [];
+
+    console.log('Cart awal:', cart);
+
+    // CEK SUDAH ADA?
+    let existing =
+        cart.find(item => item.id === id);
+
+    if(existing){
+
+        existing.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            id: id,
+
+            name: name,
+
+            price: price,
+
+            image: image,
+
+            quantity: 1
+        });
+    }
+
+    // SIMPAN KE LOCAL STORAGE
+    localStorage.setItem(
+        'cart',
+        JSON.stringify(cart)
+    );
+
+    console.log(
+        'Cart berhasil disimpan:',
+        cart
+    );
+
+    // UPDATE BADGE
+    updateCartBadge();
+
+    alert('Produk masuk ke cart!');
 }
 
 // =========================
-// RENDER CART
+// UPDATE BADGE
 // =========================
 
-function renderCart() {
+function updateCartBadge() {
 
     let cart =
         JSON.parse(localStorage.getItem('cart')) || [];
 
-    const cartItems =
-        document.getElementById('cart-items');
-
-    let subtotal = 0;
-
-    cartItems.innerHTML = '';
-
-    if(cart.length === 0){
-
-        cartItems.innerHTML = `
-            <p class="text-gray-500">
-                Cart kosong
-            </p>
-        `;
-
-        return;
-    }
+    let totalQty = 0;
 
     cart.forEach(item => {
 
-        subtotal +=
-            item.price * item.quantity;
-
-        cartItems.innerHTML += `
-
-            <div class="flex gap-4 items-center mb-4 border-b pb-4">
-
-                <img
-                    src="${item.image}"
-                    class="w-20 h-20 object-cover rounded"
-                >
-
-                <div class="flex-1">
-
-                    <h4 class="font-semibold">
-                        ${item.name}
-                    </h4>
-
-                    <p class="text-sm text-gray-500">
-                        Qty: ${item.quantity}
-                    </p>
-
-                </div>
-
-                <div class="font-bold">
-                    Rp ${formatRupiah(
-                        item.price * item.quantity
-                    )}
-                </div>
-
-            </div>
-        `;
+        totalQty += item.quantity;
     });
 
-    const shipping = 20000;
+    const badge =
+        document.getElementById('cart-count');
 
-    const grandTotal =
-        subtotal + shipping;
+    if(badge){
 
-    document.getElementById('subtotal')
-        .innerText =
-        'Rp ' + formatRupiah(subtotal);
+        badge.innerText = totalQty;
+    }
 
-    document.getElementById('grandtotal')
-        .innerText =
-        'Rp ' + formatRupiah(grandTotal);
+    console.log(
+        'Jumlah cart:',
+        totalQty
+    );
 }
 
 // =========================
-// LOAD
+// PAGE LOAD
 // =========================
 
 document.addEventListener(
     'DOMContentLoaded',
     function () {
 
-    console.log('Checkout loaded');
+    console.log(
+        'Products page loaded'
+    );
 
-    renderCart();
+    updateCartBadge();
 
-    const checkoutForm =
-        document.getElementById('checkoutForm');
-
-    checkoutForm.addEventListener(
-        'submit',
-        async function(e) {
-
-        e.preventDefault();
-
-        console.log('Submit checkout');
-
-        let cart =
-            JSON.parse(
-                localStorage.getItem('cart')
-            ) || [];
-
-        console.log('Cart:', cart);
-
-        if(cart.length === 0){
-
-            alert('Cart kosong');
-
-            return;
-        }
-
-        const formData = {
-
-            fullname:
-                document.getElementById('fullname').value,
-
-            phone:
-                document.getElementById('phone').value,
-
-            address:
-                document.getElementById('address').value,
-
-            city:
-                document.getElementById('city').value,
-
-            postal_code:
-                document.getElementById('postal_code').value,
-
-            courier:
-                document.getElementById('courier').value,
-
-            cart: cart
-        };
-
-        console.log('FormData:', formData);
-
-        try {
-
-            const response =
-                await fetch('/checkout', {
-
-                method: 'POST',
-
-                headers: {
-
-                    'Content-Type':
-                        'application/json',
-
-                    'X-CSRF-TOKEN':
-                        '{{ csrf_token() }}',
-
-                    'Accept':
-                        'application/json'
-                },
-
-                body:
-                    JSON.stringify(formData)
-            });
-
-            const result =
-                await response.json();
-
-            console.log('Result:', result);
-
-            if(result.success){
-
-                alert(
-                    'Order berhasil disimpan!'
-                );
-
-                // HAPUS CART
-                localStorage.removeItem('cart');
-
-                // PESAN WA
-                const waMessage =
-`Halo Admin, saya ingin order furniture.
-
-No Order: ${result.order_number}
-
-Total: Rp ${result.total}`;
-
-                // GANTI NOMOR ADMIN
-                const waUrl =
-`https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`;
-
-                // BUKA WA
-                window.open(
-                    waUrl,
-                    '_blank'
-                );
-
-                // REDIRECT
-                setTimeout(() => {
-
-                    window.location.href = '/';
-
-                }, 1000);
-
-            } else {
-
-                console.log(result);
-
-                alert(
-                    result.error ||
-                    result.message ||
-                    'Checkout gagal'
-                );
-            }
-
-        } catch(error){
-
-            console.error(error);
-
-            alert(
-                'Terjadi error checkout'
-            );
-        }
-
-    });
-
+    console.log(
+        localStorage.getItem('cart')
+    );
 });
 
 </script>
