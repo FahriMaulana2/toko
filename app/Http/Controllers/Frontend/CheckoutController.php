@@ -20,94 +20,180 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data
+        // VALIDASI
         $request->validate([
+
             'fullname' => 'required|string|max:255',
+
             'phone' => 'required|string|max:20',
+
             'address' => 'required|string',
+
             'city' => 'required|string|max:100',
+
             'postal_code' => 'required|string|max:10',
+
             'courier' => 'required|string',
+
             'cart' => 'required|array',
+
             'cart.*.id' => 'required',
+
             'cart.*.name' => 'required',
+
             'cart.*.price' => 'required|numeric',
+
             'cart.*.quantity' => 'required|integer|min:1',
         ]);
 
         $cart = $request->cart;
-        
-        // Hitung total
+
+        // HITUNG TOTAL
         $subtotal = 0;
+
         foreach ($cart as $item) {
-            $subtotal += $item['price'] * $item['quantity'];
+
+            $subtotal +=
+                $item['price'] * $item['quantity'];
         }
+
         $shippingCost = 20000;
+
         $grandTotal = $subtotal + $shippingCost;
-        
-        // Generate Order ID
-        $orderNumber = 'INV-' . date('Ymd') . '-' . strtoupper(Str::random(6));
-        
+
+        // ORDER NUMBER
+        $orderNumber =
+            'INV-' .
+            date('Ymd') .
+            '-' .
+            strtoupper(Str::random(6));
+
         DB::beginTransaction();
-        
+
         try {
-            // 1. Simpan Order
+
+            // =========================
+            // CREATE ORDER
+            // =========================
+
             $order = Order::create([
+
                 'order_number' => $orderNumber,
+
                 'user_id' => auth()->id(),
+
                 'total_amount' => $subtotal,
+
                 'shipping_cost' => $shippingCost,
+
                 'grand_total' => $grandTotal,
+
                 'status' => 'pending',
+
                 'notes' => 'Order via WhatsApp',
             ]);
-            
-            // 2. Simpan Order Items
+
+            // =========================
+            // CREATE ORDER ITEMS
+            // =========================
+
             foreach ($cart as $item) {
+
                 OrderItem::create([
+
                     'order_id' => $order->id,
+
                     'product_id' => $item['id'],
+
                     'product_name' => $item['name'],
+
                     'product_price' => $item['price'],
+
                     'quantity' => $item['quantity'],
-                    'subtotal' => $item['price'] * $item['quantity'],
+
+                    'subtotal' =>
+                        $item['price'] *
+                        $item['quantity'],
                 ]);
             }
-            
-            // 3. Simpan Payment
+
+            // =========================
+            // CREATE PAYMENT
+            // =========================
+
             Payment::create([
+
                 'order_id' => $order->id,
+
                 'amount' => $grandTotal,
+
                 'payment_method' => 'whatsapp',
+
                 'status' => 'pending',
             ]);
-            
-            // 4. Simpan Shipment
+
+            // =========================
+            // CREATE SHIPMENT
+            // =========================
+
             Shipment::create([
+
                 'order_id' => $order->id,
-                'recipient_name' => $request->fullname,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'city' => $request->city,
-                'postal_code' => $request->postal_code,
-                'courier' => $request->courier,
+
+                'recipient_name' =>
+                    $request->fullname,
+
+                'phone' =>
+                    $request->phone,
+
+                'address' =>
+                    $request->address,
+
+                'city' =>
+                    $request->city,
+
+                'postal_code' =>
+                    $request->postal_code,
+
+                'courier' =>
+                    $request->courier,
+
                 'status' => 'pending',
             ]);
-            
+
             DB::commit();
-            
+
             return response()->json([
+
                 'success' => true,
+
                 'order_number' => $orderNumber,
-                'total' => number_format($grandTotal, 0, ',', '.'),
-                'message' => 'Order berhasil disimpan!'
+
+                'total' => number_format(
+                    $grandTotal,
+                    0,
+                    ',',
+                    '.'
+                ),
+
+                'message' =>
+                    'Order berhasil disimpan!'
             ]);
-            
+
         } catch (\Exception $e) {
+
             DB::rollBack();
+
             return response()->json([
+
                 'success' => false,
-                'message' => 'Gagal menyimpan order: ' . $e->getMessage()
+
+                'error' => $e->getMessage(),
+
+                'line' => $e->getLine(),
+
+                'file' => $e->getFile(),
+
             ], 500);
         }
     }
