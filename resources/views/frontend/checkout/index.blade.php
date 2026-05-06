@@ -90,7 +90,7 @@
 </div>
 
 <script>
-const ADMIN_PHONE = ' 6283831520933';
+const ADMIN_PHONE = '6283831520933';
 
 document.getElementById('whatsapp-checkout').addEventListener('click', async function() {
 
