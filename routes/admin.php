@@ -8,8 +8,11 @@ use App\Http\Controllers\Admin\ShipmentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    
+Route::prefix('admin') // ✅ INI YANG PENTING
+    ->name('admin.')
+    ->middleware(['auth', 'admin'])
+    ->group(function () {
+
     // Dashboard
     Route::get('/', function () {
         return view('admin.dashboard');
@@ -36,7 +39,7 @@ Route::name('admin.')->middleware(['auth', 'admin'])->group(function () {
     Route::post('shipments/{shipment}/shipped', [ShipmentController::class, 'markAsShipped'])->name('shipments.shipped');
     Route::post('shipments/{shipment}/delivered', [ShipmentController::class, 'markAsDelivered'])->name('shipments.delivered');
 
-    // Logout
+    // Logout Admin
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/login');
