@@ -91,7 +91,7 @@
 
 <script>
 // Nomor WhatsApp Admin (GANTI DENGAN NOMOR ANDA)
-const ADMIN_PHONE = '6281234567890'; // Contoh: 6281234567890 (tanpa +62, pakai 62)
+const ADMIN_PHONE = '6283831520933'; // Contoh: 6281234567890 (tanpa +62, pakai 62)
 
 function loadOrderSummary() {
     const cart = JSON.parse(localStorage.getItem('kiana_cart') || '[]');
