@@ -1,239 +1,174 @@
 @extends('layouts.app')
 
-@section('title', 'Products - Kiana Furniture')
+@section('title', 'Checkout - Kiana Furniture')
 
 @section('content')
 
-<div class="max-w-7xl mx-auto px-4 py-16">
+<div class="max-w-6xl mx-auto px-4 py-10">
 
     <h1 class="text-3xl font-bold mb-8">
-        Our Products
+        Checkout
     </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        <!-- FILTER -->
-        <div class="lg:col-span-1">
+        <!-- FORM -->
+        <div class="lg:col-span-2">
 
-            <form
-                method="GET"
-                action="{{ route('products.index') }}"
-                class="bg-white p-6 rounded shadow"
-            >
+            <div class="bg-white shadow rounded p-6">
 
-                <!-- SEARCH -->
-                <input
-                    type="text"
-                    name="search"
-                    placeholder="Search..."
-                    value="{{ request('search') }}"
-                    class="w-full border px-3 py-2 mb-4 rounded"
-                >
+                <form id="checkoutForm">
 
-                <!-- CATEGORY -->
-                <select
-                    name="category"
-                    class="w-full border px-3 py-2 mb-4 rounded"
-                >
-                    <option value="all">
-                        All Category
-                    </option>
+                    @csrf
 
-                    <option
-                        value="living-room"
-                        {{ request('category') == 'living-room' ? 'selected' : '' }}
+                    <!-- FULLNAME -->
+                    <div class="mb-4">
+
+                        <label class="block mb-2 font-semibold">
+                            Nama Lengkap
+                        </label>
+
+                        <input
+                            type="text"
+                            name="fullname"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        >
+
+                    </div>
+
+                    <!-- PHONE -->
+                    <div class="mb-4">
+
+                        <label class="block mb-2 font-semibold">
+                            Nomor WhatsApp
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        >
+
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="mb-4">
+
+                        <label class="block mb-2 font-semibold">
+                            Alamat
+                        </label>
+
+                        <textarea
+                            name="address"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        ></textarea>
+
+                    </div>
+
+                    <!-- CITY -->
+                    <div class="mb-4">
+
+                        <label class="block mb-2 font-semibold">
+                            Kota
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        >
+
+                    </div>
+
+                    <!-- POSTAL -->
+                    <div class="mb-4">
+
+                        <label class="block mb-2 font-semibold">
+                            Kode Pos
+                        </label>
+
+                        <input
+                            type="text"
+                            name="postal_code"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        >
+
+                    </div>
+
+                    <!-- COURIER -->
+                    <div class="mb-6">
+
+                        <label class="block mb-2 font-semibold">
+                            Kurir
+                        </label>
+
+                        <select
+                            name="courier"
+                            required
+                            class="w-full border rounded px-4 py-2"
+                        >
+
+                            <option value="">
+                                Pilih Kurir
+                            </option>
+
+                            <option value="JNE">
+                                JNE
+                            </option>
+
+                            <option value="J&T">
+                                J&T
+                            </option>
+
+                            <option value="SiCepat">
+                                SiCepat
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button
+                        type="submit"
+                        class="w-full bg-black text-white py-3 rounded hover:bg-gray-800 transition"
                     >
-                        Living Room
-                    </option>
+                        Proses ke WhatsApp
+                    </button>
 
-                    <option
-                        value="bedroom"
-                        {{ request('category') == 'bedroom' ? 'selected' : '' }}
-                    >
-                        Bedroom
-                    </option>
+                </form>
 
-                    <option
-                        value="office"
-                        {{ request('category') == 'office' ? 'selected' : '' }}
-                    >
-                        Office
-                    </option>
-
-                    <option
-                        value="kitchen"
-                        {{ request('category') == 'kitchen' ? 'selected' : '' }}
-                    >
-                        Kitchen
-                    </option>
-
-                    <option
-                        value="dining-room"
-                        {{ request('category') == 'dining-room' ? 'selected' : '' }}
-                    >
-                        Dining Room
-                    </option>
-
-                </select>
-
-                <!-- PRICE -->
-                <select
-                    name="price"
-                    class="w-full border px-3 py-2 mb-4 rounded"
-                >
-
-                    <option value="">
-                        All Price
-                    </option>
-
-                    <option
-                        value="0-500000"
-                        {{ request('price') == '0-500000' ? 'selected' : '' }}
-                    >
-                        Under 500K
-                    </option>
-
-                    <option
-                        value="500000-1000000"
-                        {{ request('price') == '500000-1000000' ? 'selected' : '' }}
-                    >
-                        500K - 1jt
-                    </option>
-
-                    <option
-                        value="1000000-3000000"
-                        {{ request('price') == '1000000-3000000' ? 'selected' : '' }}
-                    >
-                        1jt - 3jt
-                    </option>
-
-                    <option
-                        value="3000000+"
-                        {{ request('price') == '3000000+' ? 'selected' : '' }}
-                    >
-                        Above 3jt
-                    </option>
-
-                </select>
-
-                <!-- SORT -->
-                <select
-                    name="sort"
-                    class="w-full border px-3 py-2 mb-4 rounded"
-                >
-
-                    <option value="latest">
-                        Newest
-                    </option>
-
-                    <option
-                        value="price_low"
-                        {{ request('sort') == 'price_low' ? 'selected' : '' }}
-                    >
-                        Price Low → High
-                    </option>
-
-                    <option
-                        value="price_high"
-                        {{ request('sort') == 'price_high' ? 'selected' : '' }}
-                    >
-                        Price High → Low
-                    </option>
-
-                </select>
-
-                <!-- BUTTON -->
-                <button
-                    class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
-                >
-                    Filter
-                </button>
-
-            </form>
+            </div>
 
         </div>
 
-        <!-- PRODUCT GRID -->
-        <div class="lg:col-span-3">
+        <!-- CART -->
+        <div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white shadow rounded p-6">
 
-                @forelse($products as $p)
+                <h2 class="text-xl font-bold mb-4">
+                    Cart
+                </h2>
 
-                    @php
+                <div id="cart-items"></div>
 
-                        if (
-                            $p->image &&
-                            Str::startsWith($p->image, 'http')
-                        ) {
+                <hr class="my-4">
 
-                            $imageUrl = $p->image;
+                <div class="flex justify-between font-bold text-lg">
 
-                        } elseif ($p->image) {
+                    <span>Total</span>
 
-                            $imageUrl =
-                                asset('storage/' . $p->image);
+                    <span id="grand-total">
+                        Rp 0
+                    </span>
 
-                        } else {
-
-                            $imageUrl =
-                                'https://placehold.co/300x300?text=No+Image';
-                        }
-
-                    @endphp
-
-                    <div class="bg-white shadow rounded overflow-hidden">
-
-                        <!-- IMAGE -->
-                        <a href="{{ route('products.show', $p->slug) }}">
-
-                            <img
-                                src="{{ $imageUrl }}"
-                                alt="{{ $p->name }}"
-                                class="w-full h-60 object-cover hover:scale-105 transition duration-300"
-                            >
-
-                        </a>
-
-                        <!-- CONTENT -->
-                        <div class="p-4">
-
-                            <h3 class="font-bold text-lg mb-2">
-                                {{ $p->name }}
-                            </h3>
-
-                            <p class="text-brown-600 font-bold mb-4">
-                                Rp {{ number_format($p->price, 0, ',', '.') }}
-                            </p>
-
-                            <!-- BUTTON -->
-                            <button
-                                onclick="addToCart(
-                                    {{ $p->id }},
-                                    '{{ $p->name }}',
-                                    {{ $p->price }},
-                                    '{{ $imageUrl }}'
-                                )"
-                                class="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
-                            >
-                                Add To Cart
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                @empty
-
-                    <div class="col-span-3 text-center py-10">
-
-                        <p class="text-gray-500 text-lg">
-                            Tidak ada produk ditemukan
-                        </p>
-
-                    </div>
-
-                @endforelse
+                </div>
 
             </div>
 
@@ -243,107 +178,216 @@
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 
-function addToCart(id, name, price, image) {
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    console.log('ADD TO CART');
+function renderCart() {
 
-    // AMBIL CART
-    let cart =
-        JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer =
+        document.getElementById('cart-items');
 
-    console.log('Cart awal:', cart);
+    const grandTotal =
+        document.getElementById('grand-total');
 
-    // CEK SUDAH ADA?
-    let existing =
-        cart.find(item => item.id === id);
+    if(!cartContainer) return;
 
-    if(existing){
+    if(cart.length < 1){
 
-        existing.quantity += 1;
+        cartContainer.innerHTML = `
+            <p class="text-gray-500">
+                Cart kosong
+            </p>
+        `;
 
-    } else {
+        grandTotal.innerHTML = 'Rp 0';
 
-        cart.push({
-
-            id: id,
-
-            name: name,
-
-            price: price,
-
-            image: image,
-
-            quantity: 1
-        });
+        return;
     }
 
-    // SIMPAN KE LOCAL STORAGE
-    localStorage.setItem(
-        'cart',
-        JSON.stringify(cart)
-    );
+    let html = '';
 
-    console.log(
-        'Cart berhasil disimpan:',
-        cart
-    );
-
-    // UPDATE BADGE
-    updateCartBadge();
-
-    alert('Produk masuk ke cart!');
-}
-
-// =========================
-// UPDATE BADGE
-// =========================
-
-function updateCartBadge() {
-
-    let cart =
-        JSON.parse(localStorage.getItem('cart')) || [];
-
-    let totalQty = 0;
+    let total = 0;
 
     cart.forEach(item => {
 
-        totalQty += item.quantity;
+        let subtotal =
+            item.price * item.quantity;
+
+        total += subtotal;
+
+        html += `
+
+            <div class="flex gap-4 mb-4 border-b pb-4">
+
+                <img
+                    src="${item.image}"
+                    class="w-20 h-20 object-cover rounded"
+                >
+
+                <div class="flex-1">
+
+                    <h3 class="font-bold">
+                        ${item.name}
+                    </h3>
+
+                    <p>
+                        Qty: ${item.quantity}
+                    </p>
+
+                    <p class="font-semibold">
+                        Rp ${subtotal.toLocaleString('id-ID')}
+                    </p>
+
+                </div>
+
+            </div>
+        `;
     });
 
-    const badge =
-        document.getElementById('cart-count');
+    cartContainer.innerHTML = html;
 
-    if(badge){
-
-        badge.innerText = totalQty;
-    }
-
-    console.log(
-        'Jumlah cart:',
-        totalQty
-    );
+    grandTotal.innerHTML =
+        'Rp ' + total.toLocaleString('id-ID');
 }
-
-// =========================
-// PAGE LOAD
-// =========================
 
 document.addEventListener(
     'DOMContentLoaded',
     function () {
 
-    console.log(
-        'Products page loaded'
-    );
+    console.log('Checkout loaded');
 
-    updateCartBadge();
+    renderCart();
 
-    console.log(
-        localStorage.getItem('cart')
-    );
+    const form =
+        document.getElementById('checkoutForm');
+
+    form.addEventListener(
+        'submit',
+        async function(e){
+
+        e.preventDefault();
+
+        if(cart.length < 1){
+
+            alert('Cart kosong');
+
+            return;
+        }
+
+        const formData = {
+
+            fullname:
+                form.fullname.value,
+
+            phone:
+                form.phone.value,
+
+            address:
+                form.address.value,
+
+            city:
+                form.city.value,
+
+            postal_code:
+                form.postal_code.value,
+
+            courier:
+                form.courier.value,
+
+            cart: cart
+        };
+
+        console.log(
+            'KIRIM DATA:',
+            formData
+        );
+
+        try {
+
+            const response =
+                await fetch('/checkout', {
+
+                method: 'POST',
+
+                headers: {
+
+                    'Content-Type':
+                        'application/json',
+
+                    'X-CSRF-TOKEN':
+                        document.querySelector(
+                            'meta[name="csrf-token"]'
+                        ).content
+                },
+
+                body:
+                    JSON.stringify(formData)
+            });
+
+            const result =
+                await response.json();
+
+            console.log(
+                'RESPON:',
+                result
+            );
+
+            if(result.success){
+
+                // FORMAT PESAN WA
+                let message =
+`Halo Admin Kiana Furniture
+
+Saya ingin order furniture:
+
+`;
+
+                cart.forEach(item => {
+
+                    message +=
+`${item.name}
+Qty: ${item.quantity}
+
+`;
+                });
+
+                message += `
+Total:
+Rp ${result.total}
+
+Nama:
+${formData.fullname}
+
+Alamat:
+${formData.address}
+
+Kota:
+${formData.city}
+
+Kurir:
+${formData.courier}
+`;
+
+                // HAPUS CART
+                localStorage.removeItem('cart');
+
+                // REDIRECT WA
+                window.location.href =
+`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+
+            } else {
+
+                alert(result.message);
+            }
+
+        } catch(error){
+
+            console.log(error);
+
+            alert('Checkout gagal');
+        }
+    });
 });
 
 </script>
