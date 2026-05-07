@@ -11,22 +11,46 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'order_number', 'total_amount', 'shipping_cost',
-        'grand_total', 'status', 'notes'
+        'user_id',
+        'order_number',
+
+        'fullname',
+        'phone',
+        'address',
+        'city',
+        'postal_code',
+        'courier',
+
+        'items',
+
+        'total_amount',
+        'shipping_cost',
+        'grand_total',
+
+        'status',
+        'notes'
     ];
 
     protected $casts = [
+        'items' => 'array',
+
         'total_amount' => 'decimal:2',
         'shipping_cost' => 'decimal:2',
         'grand_total' => 'decimal:2',
     ];
 
-    // Relationships
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // 🔥 INI YANG BELUM ADA
     public function items()
     {
         return $this->hasMany(OrderItem::class);
@@ -42,25 +66,25 @@ class Order extends Model
         return $this->hasOne(Shipment::class);
     }
 
-    // Auto generate order number
+    /*
+    |--------------------------------------------------------------------------
+    | AUTO ORDER NUMBER
+    |--------------------------------------------------------------------------
+    */
+
     protected static function boot()
     {
         parent::boot();
-        static::creating(function ($order) {
-            $order->order_number = 'KIA-' . strtoupper(Str::random(8)) . date('Ymd');
-        });
-    }
 
-    // Status badge helper
-    public function getStatusBadgeAttribute()
-    {
-        $badges = [
-            'pending' => '<span class="badge badge-warning">Pending</span>',
-            'processed' => '<span class="badge badge-info">Processed</span>',
-            'shipped' => '<span class="badge badge-primary">Shipped</span>',
-            'completed' => '<span class="badge badge-success">Completed</span>',
-            'cancelled' => '<span class="badge badge-danger">Cancelled</span>',
-        ];
-        return $badges[$this->status] ?? '<span class="badge badge-secondary">Unknown</span>';
+        static::creating(function ($order) {
+
+            if (!$order->order_number) {
+                $order->order_number =
+                    'INV-' .
+                    date('Ymd') .
+                    '-' .
+                    strtoupper(Str::random(6));
+            }
+        });
     }
 }

@@ -277,33 +277,84 @@
         </div>
         
         <div class="grid md:grid-cols-2 gap-12">
+            <!-- Contact Info -->
             <div data-aos="fade-right">
                 <div class="space-y-6">
+                    <!-- Alamat -->
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-map-marker-alt text-brown-600 text-xl"></i>
                         </div>
-                        <div><h3 class="text-lg font-semibold text-gray-800">Visit Us</h3><p class="text-gray-600">Jl. Furniture No. 123, Jakarta Selatan<br>Indonesia 12120</p></div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Visit Us</h3>
+                            <p class="text-gray-600">
+                                Jl. Raya Jepara KM 2, No. 88<br>
+                                Desa Mlonggo, Kecamatan Mlonggo<br>
+                                Kabupaten Jepara, Jawa Tengah 59352
+                            </p>
+                        </div>
                     </div>
+                    
+                    <!-- WhatsApp -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-whatsapp text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">WhatsApp</h3>
+                            <p class="text-gray-600">
+                                <a href="https://wa.me/6283831520933" target="_blank" class="text-green-600 hover:underline">
+                                    +62 838 3152 0933
+                                </a>
+                                <br><span class="text-sm text-gray-500">Klik untuk chat langsung</span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Telepon -->
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-phone text-brown-600 text-xl"></i>
                         </div>
-                        <div><h3 class="text-lg font-semibold text-gray-800">Call Us</h3><p class="text-gray-600">+62 123 4567 890<br>+62 812 3456 7890</p></div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Call Us</h3>
+                            <p class="text-gray-600">
+                                +62 838 3152 0933 (Admin)<br>
+                                +62 831 3875 6049 (Owner)
+                            </p>
+                        </div>
                     </div>
+                    
+                    <!-- Email -->
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-envelope text-brown-600 text-xl"></i>
                         </div>
-                        <div><h3 class="text-lg font-semibold text-gray-800">Email Us</h3><p class="text-gray-600">info@kianafurniture.com<br>support@kianafurniture.com</p></div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Email Us</h3>
+                            <p class="text-gray-600">
+                                kianafurniture@gmail.com<br>
+                                cs@kianafurniture.com
+                            </p>
+                        </div>
                     </div>
+                    
+                    <!-- Jam Operasional -->
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-clock text-brown-600 text-xl"></i>
                         </div>
-                        <div><h3 class="text-lg font-semibold text-gray-800">Business Hours</h3><p class="text-gray-600">Monday - Friday: 9AM - 6PM<br>Saturday: 10AM - 4PM<br>Sunday: Closed</p></div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800">Business Hours</h3>
+                            <p class="text-gray-600">
+                                Senin - Sabtu: 08.00 - 17.00<br>
+                                Minggu & Hari Besar: Tutup
+                            </p>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Social Media -->
                 <div class="mt-8 pt-6 border-t border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4">Follow Us</h3>
                     <div class="flex gap-4">
@@ -315,16 +366,34 @@
                 </div>
             </div>
             
+            <!-- Contact Form -->
             <div data-aos="fade-left">
                 <form action="#" method="POST" class="bg-gray-50 rounded-2xl p-6 shadow-md">
                     @csrf
                     <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">Name *</label><input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-brown-600"></div>
-                        <div><label class="block text-sm font-medium text-gray-700 mb-1">Email *</label><input type="email" name="email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-brown-600"></div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                            <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-brown-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                            <input type="email" name="email" required class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                        </div>
                     </div>
-                    <div class="mb-4"><label class="block text-sm font-medium text-gray-700 mb-1">Subject</label><input type="text" name="subject" class="w-full border border-gray-300 rounded-lg px-4 py-2"></div>
-                    <div class="mb-6"><label class="block text-sm font-medium text-gray-700 mb-1">Message *</label><textarea name="message" rows="5" required class="w-full border border-gray-300 rounded-lg px-4 py-2"></textarea></div>
-                    <button type="submit" class="w-full bg-brown-600 text-white py-3 rounded-lg font-semibold hover:bg-brown-700 transition">Send Message <i class="fas fa-paper-plane ml-2"></i></button>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                        <input type="text" name="subject" class="w-full border border-gray-300 rounded-lg px-4 py-2">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Message *</label>
+                        <textarea name="message" rows="5" required class="w-full border border-gray-300 rounded-lg px-4 py-2"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-brown-600 text-white py-3 rounded-lg font-semibold hover:bg-brown-700 transition">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
                 </form>
             </div>
         </div>

@@ -60,28 +60,27 @@ function displayCart() {
             <tr class="border-b">
                 <td class="px-4 py-3">
                     <div class="flex items-center gap-3">
-                        <img src="${item.image || '/images/placeholder.jpg'}" class="w-16 h-16 object-cover rounded" onerror="this.src='/images/placeholder.jpg'">
+                        <img src="${item.image || '/images/placeholder.jpg'}" class="w-16 h-16 object-cover rounded">
                         <span class="font-medium">${item.name}</span>
                     </div>
                 </td>
                 <td class="px-4 py-3 text-center">Rp ${item.price.toLocaleString('id-ID')}</td>
-                <td class="px-4 py-3">
-                    <div class="flex items-center justify-center gap-2">
-                        <button onclick="updateQty(${item.id}, ${item.quantity - 1})" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-brown-600 hover:text-white">-</button>
-                        <span class="w-12 text-center">${item.quantity}</span>
-                        <button onclick="updateQty(${item.id}, ${item.quantity + 1})" class="w-8 h-8 bg-gray-200 rounded-full hover:bg-brown-600 hover:text-white">+</button>
-                    </div>
+                <td class="px-4 py-3 text-center">
+                    <button onclick="updateQty(${item.id}, ${item.quantity - 1})">-</button>
+                    <span class="mx-2">${item.quantity}</span>
+                    <button onclick="updateQty(${item.id}, ${item.quantity + 1})">+</button>
                 </td>
                 <td class="px-4 py-3 text-center">Rp ${subtotal.toLocaleString('id-ID')}</td>
                 <td class="px-4 py-3 text-center">
-                    <button onclick="removeItem(${item.id})" class="text-red-500 hover:text-red-700">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <button onclick="removeItem(${item.id})" class="text-red-500">Hapus</button>
                 </td>
             </tr>
         `;
     }
     
+    const shipping = 20000;
+    const grandTotal = total + shipping;
+
     html += `
                         </tbody>
                     </table>
@@ -91,28 +90,28 @@ function displayCart() {
             <div class="lg:w-1/3">
                 <div class="bg-white rounded-xl shadow-md p-6">
                     <h3 class="text-xl font-semibold mb-4">Order Summary</h3>
-                    <div class="border-t pt-4">
-                        <div class="flex justify-between mb-2">
-                            <span>Subtotal</span>
-                            <span class="font-bold">Rp ${total.toLocaleString('id-ID')}</span>
-                        </div>
-                        <div class="flex justify-between mb-2">
-                            <span>Shipping</span>
-                            <span>Rp 20,000</span>
-                        </div>
-                        <div class="border-t pt-2 mt-2">
-                            <div class="flex justify-between font-bold text-lg">
-                                <span>Total</span>
-                                <span class="text-brown-600">Rp ${(total + 20000).toLocaleString('id-ID')}</span>
-                            </div>
-                        </div>
+
+                    <div class="flex justify-between mb-2">
+                        <span>Subtotal</span>
+                        <span>Rp ${total.toLocaleString('id-ID')}</span>
                     </div>
-                    
-                    <!-- TOMBOL PROCEED TO CHECKOUT -->
-                    <a href="/checkout" class="block w-full bg-brown-600 text-white text-center py-3 rounded-lg mt-6 hover:bg-brown-700 transition">
+
+                    <div class="flex justify-between mb-2">
+                        <span>Shipping</span>
+                        <span>Rp ${shipping.toLocaleString('id-ID')}</span>
+                    </div>
+
+                    <div class="flex justify-between font-bold text-lg border-t pt-2">
+                        <span>Total</span>
+                        <span class="text-brown-600">Rp ${grandTotal.toLocaleString('id-ID')}</span>
+                    </div>
+
+                    <!-- ✅ FIX UTAMA DI SINI -->
+                    <a href="{{ route('checkout.index') }}" 
+                       class="block w-full bg-brown-600 text-white text-center py-3 rounded-lg mt-6 hover:bg-brown-700 transition">
                         Proceed to Checkout
                     </a>
-                    
+
                     <a href="{{ route('products.index') }}" class="block w-full text-center text-brown-600 mt-4 hover:underline">
                         Continue Shopping
                     </a>
@@ -127,15 +126,17 @@ function displayCart() {
 function updateQty(id, newQty) {
     if (newQty <= 0) {
         removeItem(id);
-    } else {
-        let cart = JSON.parse(localStorage.getItem('kiana_cart') || '[]');
-        const item = cart.find(i => i.id == id);
-        if (item) {
-            item.quantity = newQty;
-            localStorage.setItem('kiana_cart', JSON.stringify(cart));
-            displayCart();
-            updateCartBadge();
-        }
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem('kiana_cart') || '[]');
+    const item = cart.find(i => i.id == id);
+
+    if (item) {
+        item.quantity = newQty;
+        localStorage.setItem('kiana_cart', JSON.stringify(cart));
+        displayCart();
+        updateCartBadge();
     }
 }
 
@@ -145,13 +146,13 @@ function removeItem(id) {
     localStorage.setItem('kiana_cart', JSON.stringify(cart));
     displayCart();
     updateCartBadge();
-    alert('Item removed from cart');
 }
 
 function updateCartBadge() {
     const cart = JSON.parse(localStorage.getItem('kiana_cart') || '[]');
     const count = cart.reduce((sum, item) => sum + item.quantity, 0);
     const badge = document.getElementById('cart-badge');
+
     if (badge) {
         if (count > 0) {
             badge.textContent = count;

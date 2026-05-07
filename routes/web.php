@@ -1,30 +1,20 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
-
-/*
-|--------------------------------------------------------------------------
-| WEB ROUTES (FRONTEND)
-|--------------------------------------------------------------------------
-*/
+use Illuminate\Support\Facades\Auth;
 
 // Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
-// ==================== PRODUCTS ====================
+// Products
 Route::get('/products', [FrontendProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [FrontendProductController::class, 'show'])->name('products.show');
 
-
-// ==================== CART ====================
+// Cart
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/add', [CartController::class, 'add'])->name('add');
@@ -33,32 +23,24 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::delete('/clear', [CartController::class, 'clear'])->name('clear');
 });
 
+// ========== CHECKOUT ROUTES ==========
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/success/{orderNumber}', [CheckoutController::class, 'success'])->name('checkout.success');
 
-// ==================== CHECKOUT ====================
-Route::prefix('checkout')->name('checkout.')->group(function () {
-    Route::get('/', [CheckoutController::class, 'index'])->name('index');
-    Route::post('/', [CheckoutController::class, 'store'])->name('store');
-    Route::get('/success/{orderNumber}', [CheckoutController::class, 'success'])->name('success');
-});
-
-
-// ==================== ORDERS (LOGIN REQUIRED) ====================
+// Orders
 Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
     Route::get('/', [FrontendOrderController::class, 'index'])->name('index');
     Route::get('/{orderNumber}', [FrontendOrderController::class, 'show'])->name('show');
 });
 
-
-// ==================== AUTH (LOGIN, REGISTER, LOGOUT) ====================
+// Auth
 Auth::routes();
-// ⛔ JANGAN TAMBAH logout manual lagi (sudah ada dari Auth::routes)
 
-
-// Redirect /home → /
+// Redirect /home
 Route::get('/home', function () {
     return redirect('/');
 });
 
-
-// ==================== ADMIN ROUTES ====================
+// Admin
 require __DIR__ . '/admin.php';

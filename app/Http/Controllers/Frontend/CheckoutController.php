@@ -15,24 +15,11 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        // Ambil cart dari session
-        $cart = session()->get('cart', []);
-        
-        // Jika cart kosong, redirect ke cart dengan pesan error
-        if (empty($cart)) {
-            return redirect()->route('cart.index')->with('error', 'Your cart is empty! Please add products first.');
-        }
-        
-        $subtotal = $this->calculateSubtotal($cart);
-        $shippingCost = 20000;
-        $total = $subtotal + $shippingCost;
-        
-        return view('frontend.checkout.index', compact('cart', 'subtotal', 'shippingCost', 'total'));
+        return view('frontend.checkout.index');
     }
 
     public function store(Request $request)
     {
-        // Validasi data
         $request->validate([
             'fullname' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -40,42 +27,62 @@ class CheckoutController extends Controller
             'city' => 'required|string|max:100',
             'postal_code' => 'required|string|max:10',
             'courier' => 'required|string',
-            'cart' => 'required|array',
-            'cart.*.id' => 'required',
-            'cart.*.name' => 'required',
-            'cart.*.price' => 'required|numeric',
-            'cart.*.quantity' => 'required|integer|min:1',
+            'cart_data' => 'required'
         ]);
 
-        $cart = $request->cart;
-        
-        // Hitung total
+        $cart = json_decode($request->cart_data, true);
+
+        if (!$cart || count($cart) == 0) {
+            return back()->with('error', 'Cart kosong!');
+        }
+
+        // =========================
+        // HITUNG TOTAL
+        // =========================
         $subtotal = 0;
+
         foreach ($cart as $item) {
             $subtotal += $item['price'] * $item['quantity'];
         }
+
         $shippingCost = 20000;
         $grandTotal = $subtotal + $shippingCost;
-        
-        // Generate Order ID
+
         $orderNumber = 'INV-' . date('Ymd') . '-' . strtoupper(Str::random(6));
-        
+
         DB::beginTransaction();
-        
+
         try {
-            // 1. Simpan Order
+
+            // =========================
+            // ORDER
+            // =========================
             $order = Order::create([
                 'order_number' => $orderNumber,
                 'user_id' => auth()->id(),
+
+                'fullname' => $request->fullname,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'postal_code' => $request->postal_code,
+                'courier' => $request->courier,
+
+                'items' => json_encode($cart),
+
                 'total_amount' => $subtotal,
                 'shipping_cost' => $shippingCost,
                 'grand_total' => $grandTotal,
+
                 'status' => 'pending',
                 'notes' => 'Order via WhatsApp',
             ]);
-            
-            // 2. Simpan Order Items
+
+            // =========================
+            // ORDER ITEMS
+            // =========================
             foreach ($cart as $item) {
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
@@ -85,16 +92,20 @@ class CheckoutController extends Controller
                     'subtotal' => $item['price'] * $item['quantity'],
                 ]);
             }
-            
-            // 3. Simpan Payment
+
+            // =========================
+            // PAYMENT
+            // =========================
             Payment::create([
                 'order_id' => $order->id,
                 'amount' => $grandTotal,
                 'payment_method' => 'whatsapp',
-                'status' => 'pending',
+                'status' => 'unpaid',
             ]);
-            
-            // 4. Simpan Shipment
+
+            // =========================
+            // SHIPMENT
+            // =========================
             Shipment::create([
                 'order_id' => $order->id,
                 'recipient_name' => $request->fullname,
@@ -105,40 +116,80 @@ class CheckoutController extends Controller
                 'courier' => $request->courier,
                 'status' => 'pending',
             ]);
-            
+
             DB::commit();
-            
-            return response()->json([
-                'success' => true,
-                'order_number' => $orderNumber,
-                'total' => number_format($grandTotal, 0, ',', '.'),
-                'message' => 'Order berhasil disimpan!'
-            ]);
-            
+
+            // =========================
+            // REDIRECT KE SUCCESS
+            // =========================
+            return redirect()->route('checkout.success', $orderNumber);
+
         } catch (\Exception $e) {
+
             DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal menyimpan order: ' . $e->getMessage()
-            ], 500);
+
+            return back()->with('error', $e->getMessage());
         }
     }
 
     public function success($orderNumber)
     {
-        $order = Order::with(['items', 'payment', 'shipment'])
-            ->where('order_number', $orderNumber)
+        $order = Order::where('order_number', $orderNumber)
             ->firstOrFail();
-            
-        return view('frontend.checkout.success', compact('order'));
-    }
 
-    private function calculateSubtotal($cart)
-    {
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
+        // =========================
+        // NOMOR ADMIN
+        // =========================
+        $adminPhone = '6283831520933';
+
+        // =========================
+        // DECODE ITEMS
+        // =========================
+        $items = json_decode($order->items, true);
+
+        // =========================
+        // BUAT PESAN WHATSAPP
+        // =========================
+        $message = "*🛍️ ORDER BARU DARI KIANA FURNITURE*%0A%0A";
+
+        $message .= "*📋 DETAIL PEMESAN:*%0A";
+        $message .= "Nama: {$order->fullname}%0A";
+        $message .= "No. HP: {$order->phone}%0A";
+        $message .= "Alamat: {$order->address}%0A";
+        $message .= "Kota: {$order->city}%0A";
+        $message .= "Kode Pos: {$order->postal_code}%0A";
+        $message .= "Kurir: {$order->courier}%0A%0A";
+
+        $message .= "*🛒 PRODUK YANG DIPESAN:*%0A";
+
+        foreach ($items as $index => $item) {
+
+            $subtotal = $item['price'] * $item['quantity'];
+
+            $message .= ($index + 1) . ". ";
+            $message .= "{$item['name']} ";
+            $message .= "- {$item['quantity']} x Rp ";
+            $message .= number_format($item['price'], 0, ',', '.');
+            $message .= " = Rp ";
+            $message .= number_format($subtotal, 0, ',', '.');
+            $message .= "%0A";
         }
-        return $total;
+
+        $message .= "%0A*💰 TOTAL PEMBAYARAN:*%0A";
+        $message .= "Subtotal: Rp " . number_format($order->total_amount, 0, ',', '.') . "%0A";
+        $message .= "Ongkir: Rp " . number_format($order->shipping_cost, 0, ',', '.') . "%0A";
+        $message .= "Grand Total: Rp " . number_format($order->grand_total, 0, ',', '.') . "%0A%0A";
+
+        $message .= "_Pesan dikirim dari website Kiana Furniture_";
+
+        // =========================
+        // URL WHATSAPP
+        // =========================
+        $whatsappUrl = "https://wa.me/{$adminPhone}?text={$message}";
+
+        return view('frontend.checkout.success', compact(
+            'order',
+            'whatsappUrl'
+        ));
     }
 }
