@@ -1,47 +1,54 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ShipmentController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\DashboardController;
 
-Route::prefix('admin') // ✅ INI YANG PENTING
+Route::prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'admin'])
     ->group(function () {
 
-    // Dashboard
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    // ================= DASHBOARD =================
+    Route::get('/', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-    // Brands
+    // ================= BRAND =================
     Route::resource('brands', BrandController::class);
 
-    // Products
+    // ================= PRODUCT =================
     Route::resource('products', ProductController::class);
 
-    // Orders
+    // ================= ORDER =================
     Route::resource('orders', OrderController::class);
-    Route::put('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::put('orders/{order}/status', [OrderController::class, 'updateStatus'])
+        ->name('orders.update-status');
 
-    // Payments
+    // ================= PAYMENT =================
     Route::resource('payments', PaymentController::class);
-    Route::post('payments/{payment}/verify', [PaymentController::class, 'verify'])->name('payments.verify');
-    Route::post('payments/{payment}/reject', [PaymentController::class, 'reject'])->name('payments.reject');
+    Route::post('payments/{payment}/verify', [PaymentController::class, 'verify'])
+        ->name('payments.verify');
+    Route::post('payments/{payment}/reject', [PaymentController::class, 'reject'])
+        ->name('payments.reject');
 
-    // Shipments
+    // ================= SHIPMENT =================
     Route::resource('shipments', ShipmentController::class);
-    Route::put('shipments/{shipment}/tracking', [ShipmentController::class, 'updateTracking'])->name('shipments.update-tracking');
-    Route::post('shipments/{shipment}/shipped', [ShipmentController::class, 'markAsShipped'])->name('shipments.shipped');
-    Route::post('shipments/{shipment}/delivered', [ShipmentController::class, 'markAsDelivered'])->name('shipments.delivered');
+    Route::put('shipments/{shipment}/tracking', [ShipmentController::class, 'updateTracking'])
+        ->name('shipments.update-tracking');
+    Route::post('shipments/{shipment}/shipped', [ShipmentController::class, 'markAsShipped'])
+        ->name('shipments.shipped');
+    Route::post('shipments/{shipment}/delivered', [ShipmentController::class, 'markAsDelivered'])
+        ->name('shipments.delivered');
 
-    // Logout Admin
+    // ================= LOGOUT =================
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/login');
     })->name('logout');
+
 });
