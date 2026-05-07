@@ -59,7 +59,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <i class="fas fa-map-marker-alt w-5"></i>
-                        <span>Jakarta, Indonesia</span>
+                        <span>Jepara, Indonesia</span>
                     </li>
                 </ul>
             </div>

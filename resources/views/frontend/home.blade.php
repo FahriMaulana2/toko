@@ -289,7 +289,8 @@
                             <h3 class="text-lg font-semibold text-gray-800">Visit Us</h3>
                             <p class="text-gray-600">
                                 Jl. Raya Jepara KM 2, No. 88<br>
-                                Desa Mlonggo, Kecamatan Mlonggo<br>
+                                Kecamatan Mlonggo, Desa Karanggondang<br>
+                                Dukuh Ngipek, RT 05/RW 04<br>
                                 Kabupaten Jepara, Jawa Tengah 59352
                             </p>
                         </div>
