@@ -10,13 +10,27 @@
             </a>
             
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-1">
-                <a href="{{ url('/') }}" class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">Home</a>
-                <a href="{{ route('products.index') }}" class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">Products</a>
-                <a href="#collections" class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">Collections</a>
-                <a href="{{ url('/#contact') }}" class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">Contact</a>
-            </div>
-            
+        <div class="hidden lg:flex items-center space-x-1">
+             <a href="{{ url('/') }}"
+              class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
+              Home
+            </a>
+
+            <a href="{{ route('products.index') }}"
+              class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
+              Products
+            </a>
+
+            <a href="#company-history"
+              class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
+              Company History
+            </a>
+
+             <a href="{{ url('/#contact') }}"
+               class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
+               Contact
+            </a>
+        </div>
             <!-- Search Bar (Desktop) -->
             <div class="hidden lg:flex flex-1 max-w-md mx-8">
                 <div class="relative w-full">
