@@ -173,7 +173,7 @@
 </section>
 
 <!-- COMPANY SECTION -->
-<section id="tentang" class="py-20 bg-[#F8F5F1] overflow-hidden">
+<section id="company-history" class="py-20 bg-[#F8F5F1] overflow-hidden">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
