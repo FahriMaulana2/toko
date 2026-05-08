@@ -21,11 +21,10 @@
               Products
             </a>
 
-            <a href="#company-history"
-              class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
-              Company History
+           <a href="{{ url('/#company-history') }}"
+               class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
+               Company History
             </a>
-
              <a href="{{ url('/#contact') }}"
                class="px-4 py-2 text-gray-700 hover:text-brown-600 hover:bg-brown-50 rounded-lg transition font-medium">
                Contact
@@ -109,11 +108,27 @@
         
         <!-- Mobile Menu -->
         <div x-show="mobileMenuOpen" x-cloak class="lg:hidden py-4 border-t border-gray-100" style="display: none;">
-            <div class="flex flex-col space-y-2">
-                <a href="{{ url('/') }}" class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">Home</a>
-                <a href="{{ route('products.index') }}" class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">Products</a>
-                <a href="#collections" class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">Collections</a>
-                <a href="{{ url('/#contact') }}" class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">Contact</a>
+        <div class="flex flex-col space-y-2">
+
+        <a href="{{ url('/') }}"
+           class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">
+            Home
+        </a>
+
+        <a href="{{ route('products.index') }}"
+           class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">
+            Products
+        </a>
+
+        <a href="{{ url('/#company-history') }}"
+           class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">
+            Company History
+        </a>
+
+        <a href="{{ url('/#contact') }}"
+           class="px-4 py-3 text-gray-700 hover:bg-brown-50 hover:text-brown-600 rounded-xl transition">
+            Contact
+        </a>
                 
                 <!-- Admin Menu di Mobile (jika login sebagai admin) -->
                 @auth
