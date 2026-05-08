@@ -172,60 +172,78 @@
 
 </section>
 
-<!-- COMPANY HISTORY -->
-<section class="bg-[#8B5E3C] text-white py-20">
+<!-- COMPANY SECTION -->
+<section id="tentang" class="py-20 bg-[#F8F5F1] overflow-hidden">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-            <!-- LEFT CONTENT -->
-            <div data-aos="fade-right">
+            <!-- LEFT -->
+            <div data-aos="fade-right"
+                 data-aos-duration="1000">
 
-                <span class="uppercase tracking-[4px] text-sm text-[#EADBC8]">
-                    Tentang Perusahaan
-                </span>
+                <!-- LABEL -->
+                <div class="flex items-center gap-4 mb-5">
 
-                <h2 class="text-4xl md:text-5xl font-bold mt-4 leading-tight">
-                    Sejarah Berdirinya KianaFurniture
+                    <span class="uppercase tracking-[4px] text-sm text-[#8B5E3C] font-semibold">
+                        Tentang Perusahaan
+                    </span>
+
+                    <div class="w-16 h-[2px] bg-[#8B5E3C]"></div>
+
+                </div>
+
+                <!-- TITLE -->
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight text-[#2D2D2D] font-playfair">
+
+                    Sejarah Berdirinya
+                    <span class="text-[#8B5E3C]">
+                        KianaFurniture
+                    </span>
+
                 </h2>
 
-                <p class="mt-6 text-[#F5EDE5] leading-relaxed text-lg">
-                    KianaFurniture berdiri sejak tahun 2015 sebagai usaha furniture lokal
-                    yang berfokus pada desain interior modern, kualitas premium, dan
-                    kenyamanan pelanggan.
-                </p>
+                <!-- DESCRIPTION -->
+                <div class="space-y-5 mt-7">
 
-                <p class="mt-5 text-[#F5EDE5] leading-relaxed">
-                    Berawal dari workshop kecil bersama pengrajin lokal Jepara,
-                    kini KianaFurniture berkembang menjadi penyedia furniture terpercaya
-                    untuk kebutuhan rumah, kantor, cafe, dan interior modern.
-                </p>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        KianaFurniture berdiri sejak tahun 2015 sebagai usaha furniture lokal
+                        yang menghadirkan desain interior modern dengan kualitas premium.
+                    </p>
 
-                <p class="mt-5 text-[#F5EDE5] leading-relaxed">
-                    Kami bekerja sama dengan mitra pengrajin terbaik untuk menghasilkan
-                    produk furniture berkualitas tinggi dengan sentuhan craftsmanship
-                    khas Indonesia.
-                </p>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        Berawal dari workshop kecil di Jepara, kini berkembang menjadi
+                        penyedia furniture terpercaya untuk rumah, kantor, cafe,
+                        dan interior modern.
+                    </p>
+
+                </div>
 
                 <!-- STATS -->
-                <div class="grid grid-cols-2 gap-6 mt-10">
+                <div class="flex flex-wrap gap-5 mt-10">
 
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg">
+                    <!-- CARD -->
+                    <div class="bg-white rounded-3xl px-8 py-6 shadow-lg border border-gray-100 min-w-[180px] hover:shadow-2xl transition duration-300">
 
-                        <h3 class="text-4xl font-bold">10+</h3>
+                        <h3 class="text-4xl font-bold text-[#8B5E3C]">
+                            10+
+                        </h3>
 
-                        <p class="text-[#EADBC8] mt-2">
+                        <p class="text-gray-600 mt-2">
                             Tahun Pengalaman
                         </p>
 
                     </div>
 
-                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg">
+                    <!-- CARD -->
+                    <div class="bg-white rounded-3xl px-8 py-6 shadow-lg border border-gray-100 min-w-[180px] hover:shadow-2xl transition duration-300">
 
-                        <h3 class="text-4xl font-bold">50+</h3>
+                        <h3 class="text-4xl font-bold text-[#8B5E3C]">
+                            50+
+                        </h3>
 
-                        <p class="text-[#EADBC8] mt-2">
+                        <p class="text-gray-600 mt-2">
                             Mitra Furniture
                         </p>
 
@@ -235,36 +253,64 @@
 
             </div>
 
-            <!-- RIGHT CONTENT -->
-            <div data-aos="fade-left">
+            <!-- RIGHT -->
+            <div data-aos="fade-left"
+                 data-aos-duration="1000">
 
-                <div class="bg-white rounded-3xl overflow-hidden shadow-2xl">
+                <div class="relative rounded-[32px] overflow-hidden shadow-2xl border border-gray-200 bg-white">
 
                     <!-- MAP -->
-                    <iframe 
-                      src="https://maps.google.com/maps?q=-6.502801900516626,110.7165587251846&t=k&z=18&ie=UTF8&iwloc=&output=embed"
-                      width="100%"
-                      height="350"
-                      style="border:0;"
-                      allowfullscreen=""
-                      loading="lazy">
-                    </iframe>
+                    <div class="relative">
 
-                    <!-- INFO -->
-                    <div class="p-8 text-gray-800">
+                        <!-- LOCK OVERLAY -->
+                        <div class="absolute inset-0 z-20"></div>
 
-                        <span class="text-sm uppercase tracking-[3px] text-[#8B5E3C] font-semibold">
-                            Lokasi Mitra Produksi
-                        </span>
+                        <!-- GOOGLE MAP -->
+                        <iframe
+                            src="https://www.google.com/maps?q=-6.502801900516626,110.7165587251846&z=17&output=embed"
+                            width="100%"
+                            height="620"
+                            style="border:0;"
+                            loading="lazy"
+                            class="w-full">
+                        </iframe>
 
-                        <h3 class="text-3xl font-bold text-[#4B3A2F] mt-3">
-                            Jepara, Jawa Tengah
-                        </h3>
+                        <!-- FLOATING INFO -->
+                        <div class="absolute bottom-6 left-6 z-30">
 
-                        <p class="mt-5 text-gray-600 leading-relaxed">
-                            Mitra produksi utama KianaFurniture berlokasi di Jepara,
-                            pusat industri furniture dan ukiran kayu terkenal di Indonesia.
-                        </p>
+                            <div class="bg-white/95 backdrop-blur-md rounded-2xl px-5 py-4 shadow-xl border border-white/50 max-w-sm">
+
+                                <div class="flex items-center gap-4">
+
+                                    <!-- ICON -->
+                                    <div class="w-14 h-14 rounded-2xl bg-[#8B5E3C] flex items-center justify-center shadow-lg flex-shrink-0">
+
+                                        <i class="fas fa-map-marker-alt text-white text-xl"></i>
+
+                                    </div>
+
+                                    <!-- TEXT -->
+                                    <div>
+
+                                        <span class="uppercase tracking-[2px] text-[11px] text-[#8B5E3C] font-semibold">
+                                            Lokasi Produksi
+                                        </span>
+
+                                        <h3 class="text-xl font-bold text-[#2D2D2D] leading-tight mt-1">
+                                            Jepara, Jawa Tengah
+                                        </h3>
+
+                                        <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                                            Workshop utama furniture premium KianaFurniture.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
@@ -279,264 +325,265 @@
 </section>
 
 
-<!-- Contact Section -->
-<section id="contact" class="py-16 bg-white">
+<!-- CONTACT SECTION -->
+<section id="contact" class="py-20 bg-[#F8F5F1] overflow-hidden">
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Heading -->
-        <div class="text-center mb-12" data-aos="fade-up">
-            <span class="text-brown-600 font-semibold text-sm uppercase tracking-wider">
+        <!-- HEADING -->
+        <div class="text-center mb-16"
+             data-aos="fade-up"
+             data-aos-duration="1000">
+
+            <span class="uppercase tracking-[4px] text-sm text-[#8B5E3C] font-semibold">
                 Get In Touch
             </span>
 
-            <h2 class="text-3xl md:text-4xl font-playfair font-bold text-gray-800 mt-2">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mt-3 font-playfair">
                 Contact Us
             </h2>
 
-            <div class="w-20 h-1 bg-brown-600 mx-auto rounded-full mt-4"></div>
+            <div class="w-24 h-1 bg-[#8B5E3C] mx-auto rounded-full mt-5"></div>
 
-            <p class="text-gray-600 mt-4">
+            <p class="text-gray-600 mt-5 text-lg">
                 We'd love to hear from you
             </p>
+
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <!-- CONTENT -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
 
-            <!-- LEFT SIDE -->
-            <div data-aos="fade-right">
+            <!-- LEFT -->
+            <div data-aos="fade-right"
+                 data-aos-duration="1000">
 
-                <!-- Contact Info -->
-                <div class="space-y-6">
+                <div class="space-y-8">
 
-                    <!-- Address -->
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-map-marker-alt text-brown-600 text-xl"></i>
+                    <!-- ADDRESS -->
+                    <div class="flex items-start gap-5">
+
+                        <div class="w-14 h-14 rounded-2xl bg-[#8B5E3C]/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-[#8B5E3C] text-xl"></i>
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">
+
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">
                                 Visit Us
                             </h3>
 
-                            <p class="text-gray-600 leading-relaxed">
+                            <p class="text-gray-600 leading-8 text-lg">
                                 Jl. Raya Jepara KM 2, No. 88 <br>
                                 Kecamatan Mlonggo, Desa Karanggondang <br>
                                 Dukuh Ngipek, RT 05/RW 04 <br>
                                 Kabupaten Jepara, Jawa Tengah 59352
                             </p>
+
                         </div>
+
                     </div>
 
-                    <!-- WhatsApp -->
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <!-- WHATSAPP -->
+                    <div class="flex items-start gap-5">
+
+                        <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center flex-shrink-0">
                             <i class="fab fa-whatsapp text-green-600 text-xl"></i>
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">
+
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">
                                 WhatsApp
                             </h3>
 
                             <a href="https://wa.me/6283831520933"
                                target="_blank"
-                               class="text-green-600 hover:underline">
+                               class="text-green-600 hover:underline text-xl font-medium">
+
                                 +62 838 3152 0933
+
                             </a>
 
-                            <p class="text-sm text-gray-500 mt-1">
+                            <p class="text-gray-500 mt-2">
                                 Klik untuk chat langsung
                             </p>
+
                         </div>
+
                     </div>
 
-                    <!-- Phone -->
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-phone text-brown-600 text-xl"></i>
+                    <!-- PHONE -->
+                    <div class="flex items-start gap-5">
+
+                        <div class="w-14 h-14 rounded-2xl bg-[#8B5E3C]/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-[#8B5E3C] text-xl"></i>
                         </div>
 
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">
+
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-3">
                                 Call Us
                             </h3>
 
-                            <p class="text-gray-600">
+                            <p class="text-gray-600 leading-8 text-lg">
                                 +62 838 3152 0933 (Admin) <br>
                                 +62 895 3380 74209 (Owner)
                             </p>
-                        </div>
-                    </div>
 
-                    <!-- Email -->
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-envelope text-brown-600 text-xl"></i>
                         </div>
 
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-800">
-                                Email Us
-                            </h3>
-
-                            <p class="text-gray-600">
-                                kianafurniture@gmail.com <br>
-                                cs@kianafurniture.com
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Business Hours -->
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-brown-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-clock text-brown-600 text-xl"></i>
-                        </div>
-
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-800">
-                                Business Hours
-                            </h3>
-
-                            <p class="text-gray-600">
-                                Senin - Sabtu: 08.00 - 17.00 <br>
-                                Minggu & Hari Besar: Tutup
-                            </p>
-                        </div>
                     </div>
 
                 </div>
 
-                <!-- Social Media -->
-                <div class="mt-8 pt-6 border-t border-gray-200">
-
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                        Follow Us
-                    </h3>
-
-                    <div class="flex gap-4">
-
-                        <a href="#"
-                           class="w-10 h-10 bg-brown-100 rounded-full flex items-center justify-center hover:bg-brown-600 hover:text-white transition text-brown-600">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-
-                        <a href="#"
-                           class="w-10 h-10 bg-brown-100 rounded-full flex items-center justify-center hover:bg-brown-600 hover:text-white transition text-brown-600">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-
-                        <a href="#"
-                           class="w-10 h-10 bg-brown-100 rounded-full flex items-center justify-center hover:bg-brown-600 hover:text-white transition text-brown-600">
-                            <i class="fab fa-pinterest-p"></i>
-                        </a>
-
-                        <a href="#"
-                           class="w-10 h-10 bg-brown-100 rounded-full flex items-center justify-center hover:bg-brown-600 hover:text-white transition text-brown-600">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-
-                    </div>
-                </div>
             </div>
 
-            <!-- RIGHT SIDE -->
-            <div data-aos="fade-left">
+            <!-- RIGHT -->
+            <div data-aos="fade-left"
+                 data-aos-duration="1000">
 
-                <!-- Contact Form -->
                 <form id="contactForm"
-                      class="bg-gray-50 rounded-2xl p-6 shadow-md mb-8">
+                      class="bg-white rounded-[32px] p-8 shadow-xl border border-gray-100 w-full">
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <!-- NAME & EMAIL -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 Name *
                             </label>
 
                             <input type="text"
                                    id="name"
                                    required
-                                   class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-brown-600">
+                                   placeholder="Your Name"
+                                   class="w-full h-14 border border-gray-300 rounded-xl px-5 focus:outline-none focus:ring-2 focus:ring-[#8B5E3C]">
+
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
+
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">
                                 Email *
                             </label>
 
                             <input type="email"
                                    id="email"
                                    required
-                                   class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-brown-600">
+                                   placeholder="Your Email"
+                                   class="w-full h-14 border border-gray-300 rounded-xl px-5 focus:outline-none focus:ring-2 focus:ring-[#8B5E3C]">
+
                         </div>
 
                     </div>
 
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                    <!-- SUBJECT -->
+                    <div class="mb-5">
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Subject
                         </label>
 
                         <input type="text"
                                id="subject"
-                               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-brown-600">
+                               placeholder="Subject"
+                               class="w-full h-14 border border-gray-300 rounded-xl px-5 focus:outline-none focus:ring-2 focus:ring-[#8B5E3C]">
+
                     </div>
 
+                    <!-- MESSAGE -->
                     <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
+
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
                             Message *
                         </label>
 
                         <textarea id="message"
-                                  rows="5"
+                                  rows="7"
                                   required
-                                  class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-brown-600"></textarea>
+                                  placeholder="Write your message..."
+                                  class="w-full border border-gray-300 rounded-xl px-5 py-4 resize-none focus:outline-none focus:ring-2 focus:ring-[#8B5E3C]"></textarea>
+
                     </div>
 
+                    <!-- BUTTON -->
                     <button type="submit"
-                            class="w-full bg-brown-600 text-white py-3 rounded-lg font-semibold hover:bg-brown-700 transition">
+                            id="submitBtn"
+                            class="w-full bg-[#8B5E3C] hover:bg-[#734C30] text-white py-4 rounded-xl font-semibold text-lg shadow-lg transition duration-300">
+
                         Send Message
                         <i class="fas fa-paper-plane ml-2"></i>
+
                     </button>
+
                 </form>
 
             </div>
 
         </div>
+
     </div>
+
 </section>
 
-<!-- WhatsApp Script -->
+<!-- WHATSAPP SCRIPT -->
 <script>
 document.getElementById('contactForm').addEventListener('submit', function(e) {
 
     e.preventDefault();
 
-    let name = document.getElementById('name').value;
-    let email = document.getElementById('email').value;
-    let subject = document.getElementById('subject').value;
-    let message = document.getElementById('message').value;
+    let name = document.getElementById('name').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let subject = document.getElementById('subject').value.trim();
+    let message = document.getElementById('message').value.trim();
+
+    if(name === '' || email === '' || message === '') {
+        alert('Mohon lengkapi form terlebih dahulu.');
+        return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+
+    submitBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+
+    submitBtn.disabled = true;
 
     let phoneNumber = '6283831520933';
 
     let text =
-`Halo Admin Kiana Furniture,
+`Halo Admin KianaFurniture 👋
 
-Nama: ${name}
-Email: ${email}
-Subject: ${subject}
+Saya ingin menghubungi KianaFurniture dengan detail berikut:
 
-Pesan:
-${message}`;
+━━━━━━━━━━━━━━━
+👤 Nama : ${name}
+📧 Email : ${email}
+📝 Subject : ${subject}
+━━━━━━━━━━━━━━━
+
+💬 Pesan:
+${message}
+
+Terima kasih.`;
 
     let whatsappURL =
 `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
 
-    window.open(whatsappURL, '_blank');
+    setTimeout(() => {
+
+        window.open(whatsappURL, '_blank');
+
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+
+        document.getElementById('contactForm').reset();
+
+    }, 700);
 
 });
 </script>
-
-
 @endsection
