@@ -98,52 +98,25 @@
 
         </div>
 
+        @php
+            $featuredProducts = \App\Models\Product::latest()
+                ->take(4)
+                ->get();
+        @endphp
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-            @php
-                $featuredProducts = [
-                    [
-                        'id' => 1,
-                        'name' => 'Elegant Armchair',
-                        'slug' => 'elegant-armchair',
-                        'price' => 2450000,
-                        'image' => 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=300&h=300&fit=crop',
-                    ],
-                    [
-                        'id' => 2,
-                        'name' => 'Scandinavian Sofa',
-                        'slug' => 'scandinavian-sofa',
-                        'price' => 5800000,
-                        'image' => 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=300&fit=crop',
-                    ],
-                    [
-                        'id' => 3,
-                        'name' => 'Wooden Coffee Table',
-                        'slug' => 'wooden-coffee-table',
-                        'price' => 1200000,
-                        'image' => 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=300&h=300&fit=crop',
-                    ],
-                    [
-                        'id' => 4,
-                        'name' => 'Minimalist Lamp',
-                        'slug' => 'minimalist-lamp',
-                        'price' => 450000,
-                        'image' => 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300&h=300&fit=crop',
-                    ],
-                ];
-            @endphp
-
-            @foreach($featuredProducts as $product)
+            @forelse($featuredProducts as $product)
 
             <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300">
 
-                <a href="{{ url('/products/' . $product['slug']) }}">
+                <a href="{{ url('/products/' . $product->slug) }}">
 
                     <div class="h-64 overflow-hidden">
 
                         <img
-                            src="{{ $product['image'] }}"
-                            alt="{{ $product['name'] }}"
+                            src="{{ $product->image }}"
+                            alt="{{ $product->name }}"
                             class="w-full h-full object-cover hover:scale-105 transition duration-500">
 
                     </div>
@@ -151,11 +124,11 @@
                     <div class="p-5">
 
                         <h3 class="font-semibold text-gray-800 text-lg mb-2">
-                            {{ $product['name'] }}
+                            {{ $product->name }}
                         </h3>
 
                         <p class="text-brown-600 font-bold text-xl">
-                            Rp {{ number_format($product['price'], 0, ',', '.') }}
+                            Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
 
                     </div>
@@ -164,7 +137,13 @@
 
             </div>
 
-            @endforeach
+            @empty
+
+            <div class="col-span-4 text-center py-10 text-gray-500">
+                Belum ada produk tersedia
+            </div>
+
+            @endforelse
 
         </div>
 
