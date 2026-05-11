@@ -63,7 +63,7 @@
                             <p class="text-xs text-gray-500">{{ auth()->user()->email }}</p>
                         </div>
                         <div class="py-2">
-                            <a href="{{ route('orders.index') }}" class="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-brown-50 hover:text-brown-600 transition">
+                            <a href="{{ route('my.orders') }}" class="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-brown-50 hover:text-brown-600 transition">
                                 <i class="fas fa-box w-5"></i> My Orders
                             </a>
                             
