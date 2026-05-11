@@ -1,37 +1,107 @@
 @extends('layouts.app')
 
+@section('title', 'Dashboard')
+
 @section('content')
 
-<div class="max-w-7xl mx-auto px-4 py-10">
+<section class="min-h-screen bg-[#F8F5F1] py-16">
 
-    <!-- HEADER -->
-    <div class="bg-white rounded-3xl shadow-lg p-8 border border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex items-center justify-between flex-wrap gap-4">
+        <!-- HEADER -->
+        <div class="mb-10">
 
-            <div>
-                <h1 class="text-4xl font-bold text-gray-800">
-                    Welcome,
-                    <span class="text-brown-600">
-                        {{ auth()->user()->name }}
-                    </span>
-                </h1>
+            <span class="uppercase tracking-[4px] text-sm text-[#8B5E3C] font-semibold">
+                Dashboard
+            </span>
 
-                <p class="text-gray-500 mt-2">
-                    Dashboard Kiana Furniture
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mt-3 font-playfair">
+                Welcome Back,
+                <span class="text-[#8B5E3C]">
+                    {{ auth()->user()->name }}
+                </span>
+            </h1>
+
+            <p class="text-gray-600 mt-4 text-lg">
+                Kelola akun dan pesanan furniture Anda di sini.
+            </p>
+
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+
+                <div class="w-14 h-14 rounded-2xl bg-[#8B5E3C]/10 flex items-center justify-center mb-5">
+                    <i class="fas fa-user text-[#8B5E3C] text-2xl"></i>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    Profile
+                </h3>
+
+                <p class="text-gray-600 mb-6">
+                    Edit informasi akun dan password Anda.
                 </p>
+
+                <a href="{{ route('profile.edit') }}"
+                   class="inline-flex items-center gap-2 bg-[#8B5E3C] hover:bg-[#734C30] text-white px-5 py-3 rounded-xl transition">
+
+                    Edit Profile
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
             </div>
 
-            <div class="flex gap-3">
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
 
-                <a href="{{ url('/') }}"
-                   class="px-5 py-3 bg-brown-600 text-white rounded-2xl hover:bg-brown-700 transition">
-                    Back To Home
-                </a>
+                <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center mb-5">
+                    <i class="fas fa-box text-green-600 text-2xl"></i>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    My Orders
+                </h3>
+
+                <p class="text-gray-600 mb-6">
+                    Lihat riwayat dan status pesanan Anda.
+                </p>
 
                 <a href="{{ route('my.orders') }}"
-                   class="px-5 py-3 border border-gray-300 rounded-2xl hover:bg-gray-100 transition">
-                    My Orders
+                   class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-xl transition">
+
+                    View Orders
+                    <i class="fas fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+
+                <div class="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center mb-5">
+                    <i class="fas fa-home text-yellow-600 text-2xl"></i>
+                </div>
+
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                    Back to Home
+                </h3>
+
+                <p class="text-gray-600 mb-6">
+                    Kembali ke halaman utama website.
+                </p>
+
+                <a href="{{ route('home') }}"
+                   class="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-3 rounded-xl transition">
+
+                    Home
+                    <i class="fas fa-arrow-right"></i>
+
                 </a>
 
             </div>
@@ -40,80 +110,6 @@
 
     </div>
 
-    <!-- STATS -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-
-        <!-- TOTAL -->
-        <div class="bg-white p-6 rounded-3xl shadow border border-gray-100">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <p class="text-gray-500">
-                        Total Orders
-                    </p>
-
-                    <h2 class="text-3xl font-bold text-gray-800 mt-2">
-                        {{ \App\Models\Order::where('user_id', auth()->id())->count() }}
-                    </h2>
-                </div>
-
-                <div class="w-14 h-14 bg-brown-100 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-box text-brown-600 text-2xl"></i>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- PENDING -->
-        <div class="bg-white p-6 rounded-3xl shadow border border-gray-100">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <p class="text-gray-500">
-                        Pending Orders
-                    </p>
-
-                    <h2 class="text-3xl font-bold text-yellow-500 mt-2">
-                        {{ \App\Models\Order::where('user_id', auth()->id())->where('status','pending')->count() }}
-                    </h2>
-                </div>
-
-                <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-clock text-yellow-500 text-2xl"></i>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- COMPLETED -->
-        <div class="bg-white p-6 rounded-3xl shadow border border-gray-100">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <p class="text-gray-500">
-                        Completed Orders
-                    </p>
-
-                    <h2 class="text-3xl font-bold text-green-500 mt-2">
-                        {{ \App\Models\Order::where('user_id', auth()->id())->where('status','completed')->count() }}
-                    </h2>
-                </div>
-
-                <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-check-circle text-green-500 text-2xl"></i>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+</section>
 
 @endsection
