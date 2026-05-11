@@ -85,10 +85,28 @@
                     </div>
                 </div>
                 @else
-                <a href="{{ route('login') }}" class="px-5 py-2 bg-brown-600 text-white rounded-full hover:bg-brown-700 transition text-sm font-medium shadow-md">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Sign In
-                </a>
-                @endauth
+
+<div class="hidden lg:flex items-center gap-3">
+
+    <!-- LOGIN -->
+    <a href="{{ route('login') }}"
+       class="px-5 py-2 border border-gray-300 rounded-full hover:bg-gray-100 transition text-sm font-medium">
+
+        <i class="fas fa-sign-in-alt mr-2"></i>
+        Sign In
+    </a>
+
+    <!-- REGISTER -->
+    <a href="{{ route('register') }}"
+       class="px-5 py-2 bg-brown-600 text-white rounded-full hover:bg-brown-700 transition text-sm font-medium shadow-md">
+
+        <i class="fas fa-user-plus mr-2"></i>
+        Register
+    </a>
+
+</div>
+
+@endauth
                 
                 <!-- Mobile Menu Button -->
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden p-2 text-gray-600 hover:text-brown-600 rounded-full hover:bg-gray-100 transition">
