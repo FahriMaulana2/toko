@@ -11,21 +11,15 @@ use App\Http\Controllers\Frontend\CheckoutController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-
-
 /*
 |--------------------------------------------------------------------------
-| DASHBOARD
+| HOMEPAGE
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
 
 
@@ -79,7 +73,6 @@ Route::middleware('auth')->group(function () {
     })->name('my.orders');
 
 });
-
 
 
 /*
