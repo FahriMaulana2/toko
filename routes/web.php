@@ -1,19 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
-| WEB ROUTES
-|--------------------------------------------------------------------------
-*/
-
-/*
-|--------------------------------------------------------------------------
-| HOMEPAGE
+| HOME
 |--------------------------------------------------------------------------
 */
 
@@ -22,14 +15,24 @@ Route::get('/', function () {
 })->name('home');
 
 
-
 /*
 |--------------------------------------------------------------------------
-| PROFILE
+| DASHBOARD
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('home');
+    })->name('dashboard');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PROFILE
+    |--------------------------------------------------------------------------
+    */
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -39,21 +42,6 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CHECKOUT
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/checkout', [CheckoutController::class, 'index'])
-        ->name('checkout.index');
-
-    Route::post('/checkout', [CheckoutController::class, 'store'])
-        ->name('checkout.store');
-
 
 
     /*
@@ -72,13 +60,20 @@ Route::middleware('auth')->group(function () {
 
     })->name('my.orders');
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | CHECKOUT
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])
+        ->name('checkout.index');
+
+    Route::post('/checkout', [CheckoutController::class, 'store'])
+        ->name('checkout.store');
+
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| AUTH ROUTES
-|--------------------------------------------------------------------------
-*/
 
 require __DIR__.'/auth.php';
