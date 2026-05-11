@@ -1,46 +1,20 @@
 <?php
 
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
-// Home
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Products
-Route::get('/products', [FrontendProductController::class, 'index'])->name('products.index');
-Route::get('/products/{slug}', [FrontendProductController::class, 'show'])->name('products.show');
-
-// Cart
-Route::prefix('cart')->name('cart.')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::post('/add', [CartController::class, 'add'])->name('add');
-    Route::put('/update/{id}', [CartController::class, 'update'])->name('update');
-    Route::delete('/remove/{id}', [CartController::class, 'remove'])->name('remove');
-    Route::delete('/clear', [CartController::class, 'clear'])->name('clear');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-// ========== CHECKOUT ROUTES ==========
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::get('/checkout/success/{orderNumber}', [CheckoutController::class, 'success'])->name('checkout.success');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Orders
-Route::middleware(['auth'])->prefix('orders')->name('orders.')->group(function () {
-    Route::get('/', [FrontendOrderController::class, 'index'])->name('index');
-    Route::get('/{orderNumber}', [FrontendOrderController::class, 'show'])->name('show');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Auth
-Auth::routes();
-
-// Redirect /home
-Route::get('/home', function () {
-    return redirect('/');
-});
-
-// Admin
-require __DIR__ . '/admin.php';
+require __DIR__.'/auth.php';
