@@ -25,91 +25,16 @@
 
 <body class="bg-gray-50 overflow-x-hidden">
 
-    <!-- CUSTOM NAVBAR -->
-    <nav class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-lg shadow-sm z-50">
+    {{-- NAVBAR --}}
+    @include('layouts.partials.navbar')
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-            <div class="flex items-center justify-between h-20">
-
-                <!-- LOGO -->
-                <a href="{{ route('home') }}"
-                   class="text-2xl font-bold text-[#8B5E3C]">
-                    KianaFurniture
-                </a>
-
-                <!-- MENU -->
-                <div class="hidden md:flex items-center gap-8">
-
-                    <a href="{{ route('home') }}"
-                       class="text-gray-700 hover:text-[#8B5E3C] transition font-medium">
-                        Home
-                    </a>
-
-                    <a href="#featured"
-                       class="text-gray-700 hover:text-[#8B5E3C] transition font-medium">
-                        Collection
-                    </a>
-
-                    <a href="#tentang"
-                       class="text-gray-700 hover:text-[#8B5E3C] transition font-medium">
-                        Company
-                    </a>
-
-                    <a href="#contact"
-                       class="text-gray-700 hover:text-[#8B5E3C] transition font-medium">
-                        Contact
-                    </a>
-
-                </div>
-
-                <!-- RIGHT -->
-                <div class="flex items-center gap-4">
-
-                    @auth
-
-                        <span class="hidden md:block text-sm text-gray-600">
-                            {{ Auth::user()->name }}
-                        </span>
-
-                        <form method="POST"
-                              action="{{ route('logout') }}">
-
-                            @csrf
-
-                            <button type="submit"
-                                    class="bg-[#8B5E3C] hover:bg-[#734C30] text-white px-5 py-2 rounded-full transition">
-                                Logout
-                            </button>
-
-                        </form>
-
-                    @else
-
-                        <a href="{{ route('login') }}"
-                           class="text-gray-700 hover:text-[#8B5E3C] transition font-medium">
-                            Login
-                        </a>
-
-                        <a href="{{ route('register') }}"
-                           class="bg-[#8B5E3C] hover:bg-[#734C30] text-white px-5 py-2 rounded-full transition">
-                            Register
-                        </a>
-
-                    @endauth
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </nav>
-
-    <!-- CONTENT -->
+    {{-- CONTENT --}}
     <main class="pt-20">
         @yield('content')
     </main>
+
+    {{-- FOOTER --}}
+    @include('layouts.partials.footer')
 
     <!-- AOS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
