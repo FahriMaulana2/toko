@@ -17,16 +17,11 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| DASHBOARD
+| AUTH ROUTES
 |--------------------------------------------------------------------------
 */
 
 Route::middleware(['auth'])->group(function () {
-
-    Route::get('/dashboard', function () {
-        return view('home');
-    })->name('dashboard');
-
 
     /*
     |--------------------------------------------------------------------------
@@ -74,6 +69,5 @@ Route::middleware(['auth'])->group(function () {
         ->name('checkout.store');
 
 });
-
 
 require __DIR__.'/auth.php';
