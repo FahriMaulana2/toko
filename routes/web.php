@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,19 @@ use App\Http\Controllers\Frontend\CheckoutController;
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+
+/*
+|--------------------------------------------------------------------------
+| PRODUCTS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/products', [ProductController::class, 'index'])
+    ->name('products.index');
+
+Route::get('/products/{slug}', [ProductController::class, 'show'])
+    ->name('products.show');
 
 
 /*
